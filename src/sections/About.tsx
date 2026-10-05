@@ -18,7 +18,7 @@ export function About() {
 
         <div className="mt-14 grid grid-cols-1 gap-14 md:mt-20 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-7">
-            <h2 id="about-title" className="display reveal-lines text-[clamp(1.9rem,7.4vw,6.75rem)] leading-[0.9]">
+            <h2 id="about-title" className="display reveal-lines text-[clamp(1.9rem,7.4vw,6.75rem)] lg:text-[clamp(3rem,5.1vw,5.75rem)] leading-[0.9]">
               <span className="line" style={{ ["--i" as string]: 0 }}><span>I build systems</span></span>
               <span className="line text-muted-light" style={{ ["--i" as string]: 1 }}><span>where security</span></span>
               <span className="line text-muted-light" style={{ ["--i" as string]: 2 }}><span>meets</span></span>
