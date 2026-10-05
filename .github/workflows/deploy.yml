@@ -27,7 +27,8 @@ jobs:
       - run: npm run lint && npm run typecheck
       - run: npm run build
         env:
-          NEXT_PUBLIC_SITE_URL: https://mighiana.github.io
+          NEXT_PUBLIC_SITE_URL: https://mighiana.github.io/Portfolio
+          NEXT_PUBLIC_BASE_PATH: /Portfolio
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

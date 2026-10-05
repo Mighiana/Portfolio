@@ -5,16 +5,16 @@ import { profile, seo } from "@/data/profile";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(profile.siteUrl),
+  metadataBase: new URL(new URL(profile.siteUrl).origin),
   title: seo.title,
   description: seo.description,
   applicationName: profile.name,
   authors: [{ name: profile.name, url: profile.siteUrl }],
   keywords: ["Muhammad Usman", "cybersecurity", "cloud", "infrastructure", "AWS", "networking", "automation", "portfolio"],
-  alternates: { canonical: "/" },
+  alternates: { canonical: `${profile.siteUrl}/` },
   openGraph: {
     type: "profile",
-    url: "/",
+    url: `${profile.siteUrl}/`,
     siteName: profile.name,
     title: seo.title,
     description: seo.description,

@@ -27,7 +27,7 @@ export const profile = {
   github: "https://github.com/Mighiana",
 
   /** Served from /public. Replace the placeholder PDF with the real CV. */
-  cvPath: "/Muhammad_Usman_CV.pdf",
+  cvPath: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/Muhammad_Usman_CV.pdf`,
   cvFileName: "Muhammad_Usman_CV.pdf",
 
   /** Canonical origin used for metadata. Set NEXT_PUBLIC_SITE_URL when deploying. */
