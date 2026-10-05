@@ -48,20 +48,44 @@ for (const s of stages) {
 
 type Props = { focus?: DiagramNodeId[]; className?: string };
 
+const stageIndex = (id: DiagramNodeId) => stages.findIndex((s) => s.id === id || s.subs.some((x) => x.id === id));
+
 function useDiagramState(focus?: DiagramNodeId[]) {
-  const [hover, setHover] = useState<DiagramNodeId | null>(null);
-  const lit = (id: DiagramNodeId) => (hover ? hover === id : !focus || focus.includes(id));
+  const [hovered, setHovered] = useState<DiagramNodeId | null>(null);
+  const [pinned, setPinned] = useState<DiagramNodeId | null>(null);
+  const hover = hovered ?? pinned;
+  const activeStage = hover ? stageIndex(hover) : -1;
+  const lit = (id: DiagramNodeId) => {
+    if (!hover) return !focus || focus.includes(id);
+    const parent = stages[activeStage]?.id;
+    // Active node, its parent module, and (when a module is active) its sub-modules.
+    return id === hover || id === parent || (hover === parent && stageIndex(id) === activeStage);
+  };
+  /** Arrow between stage i and i+1 is part of the active module's path. */
+  const pathLit = (i: number) => activeStage < 0 || activeStage === i || activeStage === i + 1;
+  const toggle = (id: DiagramNodeId) => setPinned((p) => (p === id ? null : id));
   const bind = (id: DiagramNodeId) => ({
     tabIndex: 0,
     role: "button" as const,
+    "aria-pressed": pinned === id,
     "aria-label": `${allNotes.get(id)?.label}: ${allNotes.get(id)?.note}`,
-    onPointerEnter: () => setHover(id),
-    onPointerLeave: () => setHover(null),
-    onFocus: () => setHover(id),
-    onBlur: () => setHover(null),
-    className: "outline-none [&:focus-visible>rect:first-of-type]:stroke-[2]",
+    onPointerEnter: (e: React.PointerEvent) => e.pointerType === "mouse" && setHovered(id),
+    onPointerLeave: () => setHovered(null),
+    onFocus: () => setHovered(id),
+    onBlur: () => setHovered(null),
+    onClick: () => toggle(id),
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggle(id);
+      } else if (e.key === "Escape") {
+        setPinned(null);
+        (e.currentTarget as SVGElement).blur();
+      }
+    },
+    className: "cursor-pointer outline-none [&:focus-visible>rect:first-of-type]:stroke-[2.5]",
   });
-  return { hover, lit, bind };
+  return { hover, lit, pathLit, bind };
 }
 
 function Caption({ hover }: { hover: DiagramNodeId | null }) {
@@ -69,7 +93,7 @@ function Caption({ hover }: { hover: DiagramNodeId | null }) {
   return (
     <div className="meta mt-4 flex min-h-10 items-start gap-3 border-t border-graphite pt-3 text-ash" aria-live="polite">
       <span className="text-white">{n ? "Node" : "Hint"}</span>
-      <span>{n ? `${n.label} — ${n.note}` : "Hover or focus a module to inspect it."}</span>
+      <span>{n ? `${n.label} — ${n.note}` : "Hover, focus or tap a module to inspect it."}</span>
     </div>
   );
 }
@@ -87,7 +111,7 @@ const draw = (reduce: boolean | null, delay = 0) =>
 /** Desktop: horizontal schematic, left → right. */
 export function ArchitectureDiagramHorizontal({ focus, className }: Props) {
   const reduce = useReducedMotion();
-  const { hover, lit, bind } = useDiagramState(focus);
+  const { hover, lit, pathLit, bind } = useDiagramState(focus);
   const W = 1000;
   const boxW = 152;
   const gap = (W - 40 - boxW * 5) / 4;
@@ -110,13 +134,15 @@ export function ArchitectureDiagramHorizontal({ focus, className }: Props) {
         <text x={x(2) - 14} y={16} fill="#9a9a9a" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="1.5">ISOLATED / SEGMENTED</text>
 
         {stages.slice(0, 4).map((_, i) => (
-          <motion.line key={i} x1={x(i) + boxW} y1={top + boxH / 2} x2={x(i + 1) - 4} y2={top + boxH / 2} stroke="#fff" strokeWidth="1" markerEnd="url(#arrow-h)" {...draw(reduce, 0.15 * i)} />
+          <g key={i} style={{ opacity: pathLit(i) ? 1 : 0.2, transition: "opacity .4s" }}>
+            <motion.line x1={x(i) + boxW} y1={top + boxH / 2} x2={x(i + 1) - 4} y2={top + boxH / 2} stroke="#fff" strokeWidth={hover && pathLit(i) ? 2 : 1} markerEnd="url(#arrow-h)" {...draw(reduce, 0.15 * i)} />
+          </g>
         ))}
 
         {stages.map((s, i) => (
           <g key={s.id}>
             <g {...bind(s.id)} style={{ opacity: lit(s.id) ? 1 : 0.32, transition: "opacity .5s" }}>
-              <rect x={x(i)} y={top} width={boxW} height={boxH} fill={hover === s.id ? "#fff" : "#090909"} stroke="#fff" strokeWidth="1" />
+              <rect x={x(i)} y={top} width={boxW} height={boxH} fill={hover === s.id ? "#fff" : "#090909"} stroke="#fff" strokeWidth={hover === s.id ? 2 : 1} />
               <text x={x(i) + 12} y={top + 22} fontSize="10" fontFamily="var(--font-mono)" letterSpacing="1.5" fill={hover === s.id ? "#000" : "#9a9a9a"}>{s.code}</text>
               {s.title.map((t, k) => (
                 <text key={k} x={x(i) + 12} y={top + 72 + k * 18} fontSize="12" fontWeight="600" letterSpacing="-0.2" fill={hover === s.id ? "#000" : "#fff"}>{t.toUpperCase()}</text>
@@ -129,7 +155,7 @@ export function ArchitectureDiagramHorizontal({ focus, className }: Props) {
                 <g key={sub.id}>
                   <motion.line x1={x(i) + 24} y1={top + boxH} x2={x(i) + 24} y2={sy + 18} stroke="#9a9a9a" strokeWidth="1" {...draw(reduce, 0.6 + k * 0.1)} style={{ opacity: lit(sub.id) ? 0.9 : 0.25 }} />
                   <g {...bind(sub.id)} style={{ opacity: lit(sub.id) ? 1 : 0.32, transition: "opacity .5s" }}>
-                    <rect x={x(i) + 40} y={sy} width={boxW - 40} height="36" fill={hover === sub.id ? "#fff" : "#090909"} stroke="#9a9a9a" strokeWidth="1" />
+                    <rect x={x(i) + 40} y={sy} width={boxW - 40} height="36" fill={hover === sub.id ? "#fff" : "#090909"} stroke={hover === sub.id ? "#fff" : "#9a9a9a"} strokeWidth={hover === sub.id ? 2 : 1} />
                     <rect x={x(i) + 21} y={sy + 15} width="6" height="6" fill="#fff" />
                     <text x={x(i) + 50} y={sy + 22} fontSize="8.5" fontFamily="var(--font-mono)" letterSpacing="0.4" fill={hover === sub.id ? "#000" : "#d8d8d8"}>{sub.label.toUpperCase()}</text>
                   </g>
@@ -153,7 +179,7 @@ export function ArchitectureDiagramHorizontal({ focus, className }: Props) {
 /** Mobile: vertical schematic, top → bottom, simplified sub-modules. */
 export function ArchitectureDiagramVertical({ focus, className }: Props) {
   const reduce = useReducedMotion();
-  const { hover, lit, bind } = useDiagramState(focus);
+  const { hover, lit, pathLit, bind } = useDiagramState(focus);
   const W = 340;
   const rowH = 132;
   const boxH = 74;
@@ -170,11 +196,13 @@ export function ArchitectureDiagramVertical({ focus, className }: Props) {
         </defs>
         <rect x="4" y={y(2) - 10} width={W - 8} height={boxH + 20} fill="none" stroke="#9a9a9a" className="dash-flow" opacity={lit("environment") || lit("segmentation") ? 0.9 : 0.3} />
         {stages.slice(0, 4).map((_, i) => (
-          <motion.line key={i} x1={36} y1={y(i) + boxH} x2={36} y2={y(i + 1) - 14} stroke="#fff" strokeWidth="1" markerEnd="url(#arrow-v)" {...draw(reduce, 0.12 * i)} />
+          <g key={i} style={{ opacity: pathLit(i) ? 1 : 0.2, transition: "opacity .4s" }}>
+            <motion.line x1={36} y1={y(i) + boxH} x2={36} y2={y(i + 1) - 14} stroke="#fff" strokeWidth={hover && pathLit(i) ? 2 : 1} markerEnd="url(#arrow-v)" {...draw(reduce, 0.12 * i)} />
+          </g>
         ))}
         {stages.map((s, i) => (
           <g key={s.id} {...bind(s.id)} style={{ opacity: lit(s.id) ? 1 : 0.35, transition: "opacity .5s" }}>
-            <rect x="16" y={y(i)} width={W - 32} height={boxH} fill={hover === s.id ? "#fff" : "#090909"} stroke="#fff" />
+            <rect x="16" y={y(i)} width={W - 32} height={boxH} fill={hover === s.id ? "#fff" : "#090909"} stroke="#fff" strokeWidth={hover === s.id ? 2 : 1} />
             <text x="30" y={y(i) + 22} fontSize="11" fontFamily="var(--font-mono)" letterSpacing="1.5" fill={hover === s.id ? "#000" : "#9a9a9a"}>{s.code}</text>
             <text x="30" y={y(i) + 52} fontSize="15" fontWeight="600" fill={hover === s.id ? "#000" : "#fff"}>{s.title.join(" ").toUpperCase()}</text>
             {s.subs.length ? (
@@ -192,9 +220,16 @@ export function ArchitectureDiagramVertical({ focus, className }: Props) {
       </svg>
       <ul className="mt-2 grid gap-px border border-graphite bg-graphite">
         {stages.flatMap((s) => s.subs.map((sub) => ({ ...sub, parent: s.code }))).map((sub) => (
-          <li key={sub.id} className={cn("meta flex justify-between bg-ink px-3 py-2.5", lit(sub.id) ? "text-fog" : "text-ash/60")}>
-            <span>{sub.label}</span>
-            <span className="text-ash">{sub.parent}</span>
+          <li key={sub.id} className="bg-ink">
+            <button
+              type="button"
+              aria-pressed={hover === sub.id}
+              onClick={bind(sub.id).onClick}
+              className={cn("meta flex min-h-11 w-full items-center justify-between px-3 text-left transition-colors", hover === sub.id ? "bg-white text-black" : lit(sub.id) ? "text-fog" : "text-ash/60")}
+            >
+              <span>{sub.label}</span>
+              <span className={hover === sub.id ? "text-black" : "text-ash"}>{sub.parent}</span>
+            </button>
           </li>
         ))}
       </ul>

@@ -84,7 +84,7 @@ export function Navbar() {
               data-cursor="cv"
               aria-label="Open CV (PDF) in a new tab"
               className={cn(
-                "meta hidden min-h-10 items-center border px-4 transition-colors sm:inline-flex",
+                "meta hidden min-h-10 items-center whitespace-nowrap border px-4 transition-colors sm:inline-flex",
                 light ? "border-black hover:bg-black hover:text-paper" : "border-white hover:bg-white hover:text-black",
               )}
             >

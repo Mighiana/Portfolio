@@ -43,7 +43,7 @@ export const chapters: Chapter[] = [
     id: "context",
     index: "01",
     title: "Context",
-    heading: "Security testing has a lot of repeated steps.",
+    heading: "Security testing involves repeatable workflows.",
     body: [
       "Security testing in controlled environments can involve repetitive preparation, execution, monitoring and reporting steps. This project explores how selected parts of those workflows can be automated while preserving reproducibility, isolation and clear reporting.",
     ],

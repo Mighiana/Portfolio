@@ -76,13 +76,13 @@ export function ThesisCaseStudy() {
   return (
     <section id="thesis" data-nav="projects" data-theme="dark" aria-labelledby="thesis-title" className="relative bg-void text-white">
       {/* Full-screen chapter opener */}
-      <div className="shell flex min-h-[100svh] flex-col pb-12 pt-28 md:pt-32">
+      <div className="shell flex min-h-[86svh] flex-col pb-10 pt-24 md:pt-28">
         <SectionHeader index="03.1" label="Flagship case study" aside="Thesis / 2026" />
-        <div className="flex flex-1 flex-col justify-center py-14">
+        <div className="flex flex-1 flex-col justify-center py-10 md:py-12">
           <p className="reveal meta flex items-center gap-3 text-fog">
             <span aria-hidden className="size-1.5 bg-white" /> {thesis.label}
           </p>
-          <h2 id="thesis-title" className="display reveal-lines mt-8 text-[clamp(2.5rem,8.2vw,8.25rem)] leading-[0.88]">
+          <h2 id="thesis-title" className="display reveal-lines mt-8 text-[clamp(2.25rem,min(8.2vw,12.5svh),8.25rem)] leading-[0.9]">
             {thesis.titleLines.map((l, i) => (
               <span key={l} className={cn("line", i === 1 ? "text-white" : "text-fog")} style={{ ["--i" as string]: i }}>
                 <span>{l}</span>
@@ -103,7 +103,7 @@ export function ThesisCaseStudy() {
 
       {/* Architecture figure */}
       <div className="border-t border-graphite">
-        <div className="shell py-20 md:py-28">
+        <div className="shell py-16 md:py-20">
           <div className="reveal meta mb-10 flex items-center justify-between text-ash">
             <span><span className="text-white">FIG. 04</span> / System architecture — conceptual</span>
             <span className="hidden sm:inline">Highlight: {chapter.title}</span>
@@ -115,7 +115,7 @@ export function ThesisCaseStudy() {
 
       {/* Dossier chapters */}
       <div className="border-t border-graphite">
-        <div className="shell py-20 md:py-28">
+        <div className="shell py-16 md:py-20">
           <div role="tablist" aria-label="Case study chapters" onKeyDown={onKey} className="no-scrollbar -mx-5 flex overflow-x-auto border-y border-graphite px-5 md:mx-0 md:grid md:grid-cols-6 md:px-0">
             {chapters.map((c, i) => (
               <button
@@ -139,7 +139,7 @@ export function ThesisCaseStudy() {
             ))}
           </div>
 
-          <div className="relative mt-14 min-h-[28rem]">
+          <div className="relative mt-10 min-h-[20rem] md:min-h-[22rem]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={chapter.id}
@@ -158,7 +158,7 @@ export function ThesisCaseStudy() {
             </AnimatePresence>
           </div>
 
-          <div className="meta mt-14 flex items-center justify-between border-t border-graphite pt-4 text-ash">
+          <div className="meta mt-10 flex items-center justify-between border-t border-graphite pt-4 text-ash">
             <button type="button" onClick={() => setActive((active - 1 + chapters.length) % chapters.length)} className="min-h-11 hover:text-white">← Prev</button>
             <span className="tabular-nums">{chapter.index} / {String(chapters.length).padStart(2, "0")}</span>
             <button type="button" onClick={() => setActive((active + 1) % chapters.length)} className="min-h-11 hover:text-white">Next →</button>

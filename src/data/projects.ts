@@ -78,7 +78,7 @@ export const projects: Project[] = [
     year: "2025",
     status: "Completed",
     summary:
-      "Segmented AWS VPC with a public subnet for a bastion host and a private subnet for a web server. Access is restricted with security groups and network ACLs, outbound traffic goes through a NAT gateway, and VPC Flow Logs go to CloudWatch.",
+      "Segmented AWS VPC with a public subnet for a bastion host and a private subnet for a web server. Access is restricted with security groups and network ACLs, outbound traffic uses a NAT gateway, and VPC Flow Logs are sent to CloudWatch.",
     stack: ["AWS VPC", "EC2", "Security Groups", "NACL", "NAT Gateway", "CloudWatch"],
     visual: "cloud",
     links: [{ label: "Repository", href: "https://github.com/Mighiana/SecureVPC" }],
