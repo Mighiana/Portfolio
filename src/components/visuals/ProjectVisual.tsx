@@ -3,7 +3,7 @@ import type { ProjectVisual as Kind } from "@/data/projects";
 const S = { stroke: "#fff", strokeWidth: 1, fill: "none" } as const;
 const mono = { fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 1.4, fill: "#9a9a9a" } as const;
 
-function Pipeline() {
+function Pipeline({ labels = ["RUN", "TEST", "LOG", "REPORT"] }: { labels?: string[] }) {
   const xs = [30, 140, 250, 360];
   return (
     <g>
@@ -13,7 +13,7 @@ function Pipeline() {
         <g key={x}>
           <rect x={x} y="88" width="60" height="44" {...S} fill={i === 0 ? "#fff" : "#090909"} />
           {i < xs.length - 1 ? <line x1={x + 60} y1="110" x2={xs[i + 1]} y2="110" {...S} className="dash-flow" /> : null}
-          <text x={x} y="152" {...mono}>{["RUN", "TEST", "LOG", "REPORT"][i]}</text>
+          <text x={x} y="152" {...mono}>{labels[i]}</text>
         </g>
       ))}
       <rect width="6" height="6" x="-3" y="-3" fill="#fff" className="packet" style={{ offsetPath: 'path("M 90 110 L 360 110")' }} />
@@ -83,11 +83,11 @@ function Network() {
 
 const map = { pipeline: Pipeline, graph: Graph, cloud: Cloud, network: Network };
 
-export function ProjectVisual({ kind, className }: { kind: Kind; className?: string }) {
+export function ProjectVisual({ kind, labels, className }: { kind: Kind; labels?: string[]; className?: string }) {
   const C = map[kind];
   return (
     <svg viewBox="0 0 430 210" className={className} aria-hidden>
-      <C />
+      {kind === "pipeline" ? <Pipeline labels={labels} /> : <C />}
     </svg>
   );
 }

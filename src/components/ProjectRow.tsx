@@ -72,6 +72,7 @@ export function ProjectRow({ project, index }: { project: Project; index: number
           <div className="relative aspect-[43/24] w-full overflow-hidden border border-graphite bg-ink transition-colors duration-700 group-hover:border-ash">
             <div aria-hidden className="absolute inset-0 opacity-40 [background-image:linear-gradient(#242424_1px,transparent_1px),linear-gradient(90deg,#242424_1px,transparent_1px)] [background-size:32px_32px]" />
             <ProjectVisual
+              labels={project.visualLabels}
               kind={project.visual}
               className="relative h-full w-full p-4 opacity-55 transition-[opacity,transform] duration-700 ease-[var(--ease-cine)] group-hover:scale-[1.02] group-hover:opacity-100"
             />
