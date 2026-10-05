@@ -1,21 +1,21 @@
 name: Deploy to GitHub Pages
 
+# Builds the static site and publishes `out/` to the gh-pages branch
+# (Pages source: "Deploy from a branch" → gh-pages / root).
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,16 +29,11 @@ jobs:
         env:
           NEXT_PUBLIC_SITE_URL: https://mighiana.github.io/Portfolio
           NEXT_PUBLIC_BASE_PATH: /Portfolio
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: out
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Publish to gh-pages
+        working-directory: out
+        run: |
+          touch .nojekyll
+          git init -q -b gh-pages
+          git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898183+github-actions[bot]@users.noreply.github.com" commit -qm "Deploy ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
