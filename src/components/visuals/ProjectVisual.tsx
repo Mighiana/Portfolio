@@ -8,7 +8,7 @@ function Pipeline({ labels = ["RUN", "TEST", "LOG", "REPORT"] }: { labels?: stri
   return (
     <g>
       <rect x="120" y="40" width="210" height="140" {...S} stroke="#9a9a9a" strokeDasharray="3 5" />
-      <text x="120" y="32" {...mono}>CONTROLLED ENVIRONMENT</text>
+      <text x="120" y="32" {...mono}>{labels[0] === "RUN" ? "CONTROLLED ENVIRONMENT" : "ACCESS-CONTROLLED"}</text>
       {xs.map((x, i) => (
         <g key={x}>
           <rect x={x} y="88" width="60" height="44" {...S} fill={i === 0 ? "#fff" : "#090909"} />
