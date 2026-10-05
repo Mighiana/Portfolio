@@ -27,7 +27,7 @@ export const stages: Stage[] = [
     note: "Isolated systems that exist only for the exercise.",
     subs: [
       { id: "targets", label: "Target systems", note: "Lab-only hosts under test." },
-      { id: "segmentation", label: "Network segmentation", note: "Keeps the exercise inside its boundary." },
+      { id: "segmentation", label: "Segmentation", note: "Keeps the exercise inside its boundary." },
     ],
   },
   {
@@ -119,7 +119,7 @@ export function ArchitectureDiagramHorizontal({ focus, className }: Props) {
               <rect x={x(i)} y={top} width={boxW} height={boxH} fill={hover === s.id ? "#fff" : "#090909"} stroke="#fff" strokeWidth="1" />
               <text x={x(i) + 12} y={top + 22} fontSize="10" fontFamily="var(--font-mono)" letterSpacing="1.5" fill={hover === s.id ? "#000" : "#9a9a9a"}>{s.code}</text>
               {s.title.map((t, k) => (
-                <text key={k} x={x(i) + 12} y={top + 72 + k * 18} fontSize="14" fontWeight="600" fill={hover === s.id ? "#000" : "#fff"}>{t.toUpperCase()}</text>
+                <text key={k} x={x(i) + 12} y={top + 72 + k * 18} fontSize="12" fontWeight="600" letterSpacing="-0.2" fill={hover === s.id ? "#000" : "#fff"}>{t.toUpperCase()}</text>
               ))}
               <rect x={x(i) + boxW - 16} y={top + 10} width="6" height="6" fill={hover === s.id ? "#000" : "#fff"} />
             </g>
@@ -131,7 +131,7 @@ export function ArchitectureDiagramHorizontal({ focus, className }: Props) {
                   <g {...bind(sub.id)} style={{ opacity: lit(sub.id) ? 1 : 0.32, transition: "opacity .5s" }}>
                     <rect x={x(i) + 40} y={sy} width={boxW - 40} height="36" fill={hover === sub.id ? "#fff" : "#090909"} stroke="#9a9a9a" strokeWidth="1" />
                     <rect x={x(i) + 21} y={sy + 15} width="6" height="6" fill="#fff" />
-                    <text x={x(i) + 50} y={sy + 22} fontSize="10" fontFamily="var(--font-mono)" letterSpacing="1" fill={hover === sub.id ? "#000" : "#d8d8d8"}>{sub.label.toUpperCase()}</text>
+                    <text x={x(i) + 50} y={sy + 22} fontSize="8.5" fontFamily="var(--font-mono)" letterSpacing="0.4" fill={hover === sub.id ? "#000" : "#d8d8d8"}>{sub.label.toUpperCase()}</text>
                   </g>
                 </g>
               );
@@ -176,7 +176,7 @@ export function ArchitectureDiagramVertical({ focus, className }: Props) {
           <g key={s.id} {...bind(s.id)} style={{ opacity: lit(s.id) ? 1 : 0.35, transition: "opacity .5s" }}>
             <rect x="16" y={y(i)} width={W - 32} height={boxH} fill={hover === s.id ? "#fff" : "#090909"} stroke="#fff" />
             <text x="30" y={y(i) + 22} fontSize="11" fontFamily="var(--font-mono)" letterSpacing="1.5" fill={hover === s.id ? "#000" : "#9a9a9a"}>{s.code}</text>
-            <text x="30" y={y(i) + 52} fontSize="17" fontWeight="600" fill={hover === s.id ? "#000" : "#fff"}>{s.title.join(" ").toUpperCase()}</text>
+            <text x="30" y={y(i) + 52} fontSize="15" fontWeight="600" fill={hover === s.id ? "#000" : "#fff"}>{s.title.join(" ").toUpperCase()}</text>
             {s.subs.length ? (
               <text x={W - 30} y={y(i) + 22} textAnchor="end" fontSize="11" fontFamily="var(--font-mono)" fill={hover === s.id ? "#000" : "#9a9a9a"}>
                 {s.subs.length} SUB
