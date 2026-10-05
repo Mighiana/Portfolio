@@ -1,7 +1,16 @@
 import { ArrowUpRight } from "lucide-react";
-import type { Project } from "@/data/projects";
+import type { Project, ProjectSpec } from "@/data/projects";
 import { cn } from "@/lib/cn";
 import { ProjectVisual } from "./visuals/ProjectVisual";
+
+const specRows: [keyof ProjectSpec, string][] = [
+  ["problem", "Problem"],
+  ["built", "What I built"],
+  ["architecture", "Architecture"],
+  ["implementation", "Implementation"],
+  ["decisions", "Technical decisions"],
+  ["result", "Status / result"],
+];
 
 export function ProjectRow({ project, index }: { project: Project; index: number }) {
   const primary = project.caseStudy ?? project.links[0]?.href;
@@ -26,7 +35,7 @@ export function ProjectRow({ project, index }: { project: Project; index: number
             </span>
           </div>
 
-          <h3 className="mt-6 text-[clamp(1.85rem,4.4vw,3.5rem)] font-semibold uppercase leading-[0.95] tracking-[-0.035em] text-fog transition-[color,transform] duration-500 ease-[var(--ease-cine)] group-hover:translate-x-2 group-hover:text-white">
+          <h3 className="mt-6 text-[clamp(1.6rem,3.4vw,2.75rem)] font-semibold uppercase leading-[0.95] tracking-[-0.035em] text-white">
             {primary ? (
               <a
                 href={primary}
@@ -41,12 +50,12 @@ export function ProjectRow({ project, index }: { project: Project; index: number
             )}
           </h3>
 
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-ash transition-colors duration-500 group-hover:text-fog md:text-[17px]">
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-fog md:text-[17px]">
             {project.summary}
           </p>
 
           {project.stack.length ? (
-            <ul className="mt-6 flex flex-wrap gap-2" aria-label="Technologies">
+            <ul className="relative z-10 mt-6 flex flex-wrap gap-2" aria-label="Tech stack">
               {project.stack.map((s) => (
                 <li key={s} className="meta border border-graphite px-2.5 py-1.5 text-fog">{s}</li>
               ))}
@@ -74,12 +83,22 @@ export function ProjectRow({ project, index }: { project: Project; index: number
             <ProjectVisual
               labels={project.visualLabels}
               kind={project.visual}
-              className="relative h-full w-full p-4 opacity-55 transition-[opacity,transform] duration-700 ease-[var(--ease-cine)] group-hover:scale-[1.02] group-hover:opacity-100"
+              className="relative h-full w-full p-4 opacity-80 transition-opacity duration-700 group-hover:opacity-100"
             />
-            <span className="meta absolute bottom-3 left-3 text-ash">FIG. P—{project.id}</span>
-            <span className="meta absolute bottom-3 right-3 text-ash">{project.draft ? "Schematic / placeholder" : "Schematic"}</span>
+            <span className="meta absolute bottom-3 left-3 text-ash">FIG. P—{project.id} / Architecture</span>
           </div>
         </div>
+
+        {project.spec ? (
+          <dl className="relative z-10 grid grid-cols-1 border-l border-t border-graphite sm:grid-cols-2 lg:col-span-12 lg:grid-cols-3">
+            {specRows.map(([key, label]) => (
+              <div key={key} className="border-b border-r border-graphite p-4 md:p-5">
+                <dt className="meta text-white">{label}</dt>
+                <dd className="mt-2.5 text-[15px] leading-relaxed text-fog">{project.spec![key]}</dd>
+              </div>
+            ))}
+          </dl>
+        ) : null}
       </div>
     </article>
   );

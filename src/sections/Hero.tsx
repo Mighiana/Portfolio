@@ -32,7 +32,7 @@ export function Hero() {
         <div className="flex flex-1 flex-col justify-center py-12 md:py-16">
           <p className="intro meta mb-6 text-ash md:mb-8" style={d(100)}>{profile.discipline}</p>
 
-          <h1 id="hero-title" className="display text-[clamp(2.6rem,13.4vw,14.5rem)]">
+          <h1 id="hero-title" className="display text-[clamp(2.3rem,11vw,11.75rem)]">
             <span className="line intro-line"><span style={d(150)}>{profile.firstName}</span></span>
             <span className="line intro-line"><span style={d(260)}>{profile.lastName}</span></span>
           </h1>
@@ -76,7 +76,6 @@ export function Hero() {
           <a href="#about" className="inline-flex min-h-11 items-center gap-2 hover:text-white">
             <ArrowDown aria-hidden className="size-3" /> Scroll
           </a>
-          <span className="tabular-nums">01 / 06</span>
         </div>
       </div>
     </section>

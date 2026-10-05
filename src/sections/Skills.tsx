@@ -7,11 +7,11 @@ const icons: Record<SkillGroup["icon"], typeof Cloud> = { automation: Workflow, 
 export function Skills() {
   const total = skillGroups.reduce((n, g) => n + g.items.length, 0);
   return (
-    <section id="skills" data-nav="skills" data-theme="dark" aria-labelledby="skills-title" className="bg-ink py-24 text-white md:py-36">
+    <section id="skills" data-nav="skills" data-theme="dark" aria-labelledby="skills-title" className="bg-ink py-24 text-white md:py-28">
       <div className="shell">
         <SectionHeader index="05" label="System inventory" aside={`${total} components / ${skillGroups.length} modules`} />
-        <div className="mt-14 flex flex-col gap-6 md:mt-20 md:flex-row md:items-end md:justify-between">
-          <h2 id="skills-title" className="display reveal-lines text-[clamp(3rem,9vw,8.5rem)]">
+        <div className="mt-14 flex flex-col gap-6 md:mt-14 md:flex-row md:items-end md:justify-between">
+          <h2 id="skills-title" className="display reveal-lines text-[clamp(2.5rem,7vw,6.5rem)]">
             <span className="line"><span>System</span></span>
             <span className="line" style={{ ["--i" as string]: 1 }}><span>inventory</span></span>
           </h2>
@@ -20,7 +20,7 @@ export function Skills() {
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 border-l border-t border-graphite sm:grid-cols-2 md:mt-24 lg:grid-cols-5">
+        <div className="mt-16 grid grid-cols-1 border-l border-t border-graphite sm:grid-cols-2 md:mt-16 lg:grid-cols-5">
           {skillGroups.map((g, gi) => {
             const Icon = icons[g.icon];
             return (

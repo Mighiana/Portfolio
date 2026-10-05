@@ -76,13 +76,13 @@ export function ThesisCaseStudy() {
   return (
     <section id="thesis" data-nav="projects" data-theme="dark" aria-labelledby="thesis-title" className="relative bg-void text-white">
       {/* Full-screen chapter opener */}
-      <div className="shell flex min-h-[86svh] flex-col pb-10 pt-24 md:pt-28">
+      <div className="shell flex flex-col pb-10 pt-20 md:pt-24">
         <SectionHeader index="03.1" label="Flagship case study" aside="Thesis / 2026" />
-        <div className="flex flex-1 flex-col justify-center py-10 md:py-12">
+        <div className="flex flex-col py-10 md:py-12">
           <p className="reveal meta flex items-center gap-3 text-fog">
             <span aria-hidden className="size-1.5 bg-white" /> {thesis.label}
           </p>
-          <h2 id="thesis-title" className="display reveal-lines mt-8 text-[clamp(2.25rem,min(8.2vw,12.5svh),8.25rem)] leading-[0.9]">
+          <h2 id="thesis-title" className="display reveal-lines mt-8 text-[clamp(2.1rem,5.4vw,5.25rem)] leading-[0.92]">
             {thesis.titleLines.map((l, i) => (
               <span key={l} className={cn("line", i === 1 ? "text-white" : "text-fog")} style={{ ["--i" as string]: i }}>
                 <span>{l}</span>

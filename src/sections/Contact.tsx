@@ -9,13 +9,13 @@ import { profile } from "@/data/profile";
 
 export function Contact() {
   return (
-    <section id="contact" data-nav="contact" data-theme="dark" aria-labelledby="contact-title" className="relative isolate overflow-hidden bg-void pt-24 text-white md:pt-36">
+    <section id="contact" data-nav="contact" data-theme="dark" aria-labelledby="contact-title" className="relative isolate overflow-hidden bg-void pt-20 text-white md:pt-28">
       <div aria-hidden className="absolute -right-[20%] top-[8%] -z-10 aspect-square w-[110%] opacity-60 md:-right-[8%] md:w-[62%] lg:opacity-90">
         <LazyNodeSphere className="h-full w-full" />
       </div>
       <div className="shell">
         <SectionHeader index="06" label="Contact" aside={profile.locationShort} />
-        <h2 id="contact-title" className="display reveal-lines mt-16 text-[clamp(3.2rem,11vw,10.5rem)] md:mt-24">
+        <h2 id="contact-title" className="display reveal-lines mt-12 text-[clamp(2.6rem,8.5vw,8rem)] md:mt-16">
           <span className="line"><span>Let&apos;s build</span></span>
           <span className="line text-ash" style={{ ["--i" as string]: 1 }}><span>secure</span></span>
           <span className="line" style={{ ["--i" as string]: 2 }}><span>systems.</span></span>
@@ -48,7 +48,7 @@ export function Contact() {
           </p>
         ) : null}
 
-        <footer className="mt-28 grid grid-cols-1 gap-8 border-t border-graphite py-8 md:mt-40 md:grid-cols-3 md:items-center">
+        <footer className="mt-20 grid grid-cols-1 gap-8 border-t border-graphite py-8 md:mt-28 md:grid-cols-3 md:items-center">
           <div>
             <p className="meta text-white">{profile.name}</p>
             <p className="meta mt-1 text-ash">{profile.positioning}</p>

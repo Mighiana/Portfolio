@@ -41,20 +41,28 @@ function Graph() {
 }
 
 function Cloud() {
+  const subnets = [
+    { x: 60, label: "PUBLIC SUBNET", node: "BASTION" },
+    { x: 230, label: "PRIVATE SUBNET", node: "WEB" },
+  ];
   return (
     <g>
-      <rect x="30" y="30" width="370" height="160" {...S} stroke="#9a9a9a" />
+      <rect x="30" y="30" width="370" height="150" {...S} stroke="#9a9a9a" />
       <text x="40" y="48" {...mono}>VPC</text>
-      {[60, 230].map((x, i) => (
-        <g key={x}>
-          <rect x={x} y="64" width="140" height="96" {...S} strokeDasharray="3 4" />
-          <text x={x + 10} y="80" {...mono}>{i ? "PRIVATE" : "PUBLIC"} SUBNET</text>
-          {[0, 1].map((k) => <rect key={k} x={x + 20 + k * 56} y="104" width="40" height="32" {...S} />)}
+      {subnets.map((sn, i) => (
+        <g key={sn.x}>
+          <rect x={sn.x} y="62" width="140" height="96" {...S} strokeDasharray="3 4" />
+          <text x={sn.x + 10} y="78" {...mono}>{sn.label}</text>
+          <rect x={sn.x + 20} y="98" width="64" height="32" {...S} fill={i === 0 ? "#fff" : "#090909"} />
+          <text x={sn.x + 26} y="146" {...mono}>{sn.node}</text>
+          <text x={sn.x + 92} y="98" {...mono} fontSize={8}>SG</text>
+          <text x={sn.x + 104} y="152" {...mono} fontSize={8}>NACL</text>
         </g>
       ))}
-      <line x1="200" y1="120" x2="230" y2="120" {...S} className="dash-flow" />
-      <rect x="370" y="12" width="44" height="30" {...S} fill="#090909" />
-      <text x="378" y="31" {...mono} fill="#fff">S3</text>
+      <line x1="144" y1="114" x2="250" y2="114" {...S} className="dash-flow" />
+      <text x="168" y="130" {...mono} fontSize={8}>ADMIN</text>
+      <text x="30" y="200" {...mono}>NAT GW → OUTBOUND</text>
+      <text x="262" y="200" {...mono}>FLOW LOGS → CLOUDWATCH</text>
     </g>
   );
 }

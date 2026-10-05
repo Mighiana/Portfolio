@@ -8,11 +8,11 @@ export function Journey() {
     <section id="experience" data-nav="experience" data-theme="light" aria-labelledby="journey-title" className="bg-paper pb-12 pt-24 text-black md:pt-36">
       <div className="shell">
         <SectionHeader index="04" label="Journey" tone="light" aside="Experience" />
-        <h2 id="journey-title" className="display reveal-lines mt-14 text-[clamp(3rem,9vw,8.5rem)] md:mt-20">
+        <h2 id="journey-title" className="display reveal-lines mt-14 text-[clamp(2.5rem,7vw,6.5rem)] md:mt-14">
           <span className="line"><span>Journey</span></span>
         </h2>
 
-        <div className="relative mt-16 md:mt-24">
+        <div className="relative mt-16 md:mt-16">
           <span aria-hidden className="reveal-rule absolute bottom-0 left-[5px] top-0 w-px bg-black/25 lg:left-[calc(25%-0.5px)]" />
           {journey.map((track) => (
             <div key={track.code} className="grid grid-cols-1 gap-6 pb-16 lg:grid-cols-4 lg:gap-10">

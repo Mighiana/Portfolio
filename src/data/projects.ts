@@ -2,6 +2,16 @@ export type ProjectVisual = "pipeline" | "graph" | "cloud" | "network";
 
 export type ProjectLink = { label: string; href: string };
 
+/** Engineering breakdown shown under each project. Verified facts only. */
+export type ProjectSpec = {
+  problem: string;
+  built: string;
+  architecture: string;
+  implementation: string;
+  decisions: string;
+  result: string;
+};
+
 export type Project = {
   id: string;
   title: string;
@@ -15,6 +25,7 @@ export type Project = {
   /** Optional node labels for the pipeline schematic. */
   visualLabels?: string[];
   links: ProjectLink[];
+  spec?: ProjectSpec;
   /** Internal anchor for the full case study, if any. */
   caseStudy?: string;
   flagship?: boolean;
@@ -37,6 +48,14 @@ export const projects: Project[] = [
     stack: [],
     visual: "pipeline",
     links: [],
+    spec: {
+      problem: "Manual preparation, execution, log collection and reporting make security-testing runs hard to repeat and compare.",
+      built: "An automation workflow for security testing inside an isolated lab environment, from run definition to report.",
+      architecture: "Test machine → automation framework → controlled target environment → logging & monitoring → reporting.",
+      implementation: "Environment checks, ordered test stages (reconnaissance, test modules, execution), run logging and report generation.",
+      decisions: "Runs refuse to start outside the isolated lab. The focus is orchestration and reproducibility, not exploitation.",
+      result: "Ongoing. Results will be published when the thesis evaluation is complete.",
+    },
     caseStudy: "#thesis",
     flagship: true,
     published: true,
@@ -55,6 +74,14 @@ export const projects: Project[] = [
       { label: "Repository", href: "https://github.com/Mighiana/BlastRadius" },
       { label: "Live demo", href: "https://blastradius.streamlit.app/" },
     ],
+    spec: {
+      problem: "A Terraform diff shows what changed, not what became reachable. A small change can open a new path to a sensitive resource.",
+      built: "Analyzer that compares two Terraform snapshots (HCL or saved plan JSON), models supported AWS relationships and explains newly reachable paths to sensitive resources with evidence.",
+      architecture: "React / TypeScript (Vite) → FastAPI → SQLAlchemy with PostgreSQL (SQLite locally). Bounded background jobs run the Python engine in isolation.",
+      implementation: "Resource graph builder, IAM policy normalization, attack-path search, coverage diagnostics, JSON / Markdown / SARIF export, CLI and GitHub Actions gating.",
+      decisions: "Fail closed: engine errors, timeouts or incomplete coverage return REVIEW. No Terraform execution, provider calls or AWS credentials are needed.",
+      result: "Private beta with a public Streamlit demo. Verdicts: BLOCK / REVIEW / SAFE.",
+    },
     published: true,
   },
   {
@@ -69,6 +96,14 @@ export const projects: Project[] = [
     visual: "pipeline",
     visualLabels: ["USER", "AUTH", "S3", "AUDIT"],
     links: [{ label: "Repository", href: "https://github.com/Mighiana/Cloud-Based-Secure-File-Management-System" }],
+    spec: {
+      problem: "Users need to upload and access files in cloud storage with access limited by role and their activity traceable.",
+      built: "ASP.NET Core MVC application with login and registration, file upload and download to AWS S3, and an admin dashboard for users, activity logs and reports.",
+      architecture: "Controllers → services (AWS S3 integration) → S3 bucket. SQL Server stores application data. Razor views with Bootstrap.",
+      implementation: "Authentication with hashed passwords, role-based authorization, audit logging of user activity with ASP.NET Core logging, custom error pages.",
+      decisions: "Configuration secrets (appsettings.json) are kept out of Git. S3 is accessed with dedicated credentials and strict access policies.",
+      result: "Completed.",
+    },
     published: true,
   },
   {
@@ -82,6 +117,14 @@ export const projects: Project[] = [
     stack: ["AWS VPC", "EC2", "Security Groups", "NACL", "NAT Gateway", "CloudWatch"],
     visual: "cloud",
     links: [{ label: "Repository", href: "https://github.com/Mighiana/SecureVPC" }],
+    spec: {
+      problem: "Keep a web server out of the public subnet while still allowing administration and outbound connectivity.",
+      built: "Segmented AWS VPC: public subnet with a bastion host, private subnet with the web server.",
+      architecture: "Admin access → bastion host (public subnet) → web server (private subnet). Outbound traffic from the private subnet goes through a NAT gateway.",
+      implementation: "Security groups at instance level and network ACLs at subnet level. VPC Flow Logs are sent to CloudWatch.",
+      decisions: "Single administrative entry point through the bastion host. Two filtering layers (SG + NACL). Outbound-only internet access for private instances.",
+      result: "Completed.",
+    },
     published: true,
   },
 ];

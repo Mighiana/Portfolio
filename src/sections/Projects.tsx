@@ -9,7 +9,7 @@ export function Projects() {
       <div className="shell">
         <SectionHeader index="03" label="Selected work" aside={`${String(list.length).padStart(2, "0")} entries`} />
         <div className="mt-12 flex flex-col gap-6 md:mt-16 md:flex-row md:items-end md:justify-between">
-          <h2 id="projects-title" className="display reveal-lines text-[clamp(3rem,9vw,8.5rem)]">
+          <h2 id="projects-title" className="display reveal-lines text-[clamp(2.5rem,7vw,6.5rem)]">
             <span className="line"><span>Selected</span></span>
             <span className="line" style={{ ["--i" as string]: 1 }}><span>work</span></span>
           </h2>
