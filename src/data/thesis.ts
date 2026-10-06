@@ -1,29 +1,41 @@
+/**
+ * Public, sanitized thesis summary. Thesis documents, exact research-question
+ * wording, ability/technique selection, procedure and thresholds are private
+ * and must not be added here without the author's explicit approval.
+ */
 export const thesis = {
-  label: "Thesis project",
-  titleLines: ["Automation of", "Red Team Security", "in Controlled Environments"],
+  label: "Active BSc cybersecurity research",
+  statementLines: ["A reported result", "is not an", "observed result."],
+  subtitle: "Validating automated adversary emulation against endpoint telemetry and detection.",
   title: "Automation of Red Team Security in Controlled Environments",
   meta: [
-    { label: "Type", value: "Thesis Project" },
-    { label: "Domain", value: "Cybersecurity / Security Automation" },
-    { label: "Year", value: "2026" },
-    { label: "Status", value: "Ongoing" },
+    { label: "Type", value: "BSc Thesis" },
+    { label: "Status", value: "In Progress" },
+    { label: "Period", value: "2026–2027" },
+    { label: "Stage", value: "Research / Experimental Design" },
   ],
-  scope:
-    "Controlled, isolated security research. No live systems, no third-party targets.",
+  supervision: { label: "Supervisor", value: "Rigó Ernő — Óbuda University" },
+  scope: "Controlled, isolated, authorized academic security research. No live systems. No third-party targets.",
 } as const;
 
 export type DiagramNodeId =
-  | "attacker"
   | "framework"
-  | "recon"
-  | "modules"
-  | "execution"
-  | "environment"
-  | "targets"
-  | "segmentation"
-  | "logging"
-  | "monitoring"
-  | "reporting";
+  | "abilities"
+  | "operation"
+  | "endpoint"
+  | "isolation"
+  | "groundtruth"
+  | "sysmon"
+  | "ingestion"
+  | "ingestcheck"
+  | "alert";
+
+export type ChapterBlock = {
+  /** Small caption above the block, e.g. "FIG. T-02 — Evidence model". */
+  caption: string;
+  items?: { label: string; text: string; tag?: string }[];
+  chips?: string[];
+};
 
 export type Chapter = {
   id: string;
@@ -33,10 +45,11 @@ export type Chapter = {
   body: string[];
   /** Diagram nodes highlighted while this chapter is open. */
   focus: DiagramNodeId[];
-  placeholder?: string;
-  points?: { label: string; text: string }[];
-  code?: { caption: string; source: string };
+  status?: { label: string; value: string; text: string };
+  blocks?: ChapterBlock[];
 };
+
+const allNodes: DiagramNodeId[] = ["framework", "abilities", "operation", "endpoint", "isolation", "groundtruth", "sysmon", "ingestion", "ingestcheck", "alert"];
 
 export const chapters: Chapter[] = [
   {
@@ -45,85 +58,134 @@ export const chapters: Chapter[] = [
     title: "Context",
     heading: "Security testing involves repeatable workflows.",
     body: [
-      "Security testing in controlled environments can involve repetitive preparation, execution, monitoring and reporting steps. This project explores how selected parts of those workflows can be automated while preserving reproducibility, isolation and clear reporting.",
+      "Investigating the reliability and repeatability of automated MITRE ATT&CK-based adversary emulation in a controlled Windows environment.",
+      "The research examines whether framework-reported outcomes correspond with independently observed endpoint activity, and whether confirmed activity becomes visible to defensive monitoring.",
     ],
-    focus: ["attacker", "framework", "environment", "logging", "reporting"],
+    blocks: [
+      {
+        caption: "Research foundation",
+        chips: ["MITRE ATT&CK", "MITRE CALDERA", "Microsoft Sysmon", "Wazuh"],
+        items: [
+          { label: "Academic literature", text: "Adversary emulation, cyber ranges, endpoint telemetry and defensive detection." },
+        ],
+      },
+    ],
+    focus: allNodes,
   },
   {
-    id: "problem",
+    id: "focus",
     index: "02",
-    title: "Problem",
-    heading: "Manual runs are hard to repeat and compare.",
+    title: "Research focus",
+    heading: "Three areas of focus.",
     body: [
-      "When environment preparation, test execution, log collection and reporting are done by hand, two runs of the same exercise rarely look the same. That makes results harder to reproduce, compare and review.",
-      "The thesis investigates which of these steps can be automated — and how — without weakening the isolation of the test environment.",
+      "Automated frameworks report whether each step ran. The thesis asks how far that report can be trusted, and what happens to the activity after it.",
     ],
-    focus: ["framework", "environment"],
+    blocks: [
+      {
+        caption: "Research focus",
+        items: [
+          { label: "Reported execution", text: "Reliability and repeatability of framework-reported execution." },
+          { label: "Endpoint agreement", text: "Agreement between reported execution and endpoint-observed activity." },
+          { label: "Detection visibility", text: "Visibility and detection of confirmed activity in defensive monitoring." },
+        ],
+      },
+    ],
+    focus: ["framework", "operation", "groundtruth", "alert"],
+  },
+  {
+    id: "methodology",
+    index: "03",
+    title: "Methodology",
+    heading: "Four layers of evidence, compared.",
+    body: [
+      "The planned evaluation compares each layer with the one before it, so a missed detection can be told apart from an action that never ran or telemetry that never arrived.",
+    ],
+    blocks: [
+      {
+        caption: "FIG. T-02 — Evidence model",
+        items: [
+          { label: "Framework report", text: "What the adversary-emulation framework reports." },
+          { label: "Endpoint evidence", text: "What endpoint evidence independently shows." },
+          { label: "Monitoring ingestion", text: "What telemetry reaches the monitoring platform." },
+          { label: "Defensive alert", text: "Whether defensive monitoring surfaces the confirmed activity." },
+        ],
+      },
+      {
+        caption: "Working principles",
+        items: [
+          { label: "Isolation", text: "Research remains within a controlled academic environment." },
+          { label: "Independent evidence", text: "Framework-reported outcomes are evaluated against independent endpoint evidence." },
+          { label: "Repeatability", text: "The methodology is designed to support comparable evidence across repeated experimental runs." },
+        ],
+      },
+    ],
+    focus: ["framework", "groundtruth", "ingestion", "alert"],
   },
   {
     id: "architecture",
-    index: "03",
-    title: "Architecture",
-    heading: "A pipeline from test machine to report.",
-    body: [
-      "The conceptual architecture separates the machine that drives tests, the automation framework, the isolated target environment, the logging layer and the reporting stage. Each stage hands structured output to the next.",
-    ],
-    points: [
-      { label: "Test machine", text: "Starts and supervises test runs." },
-      { label: "Automation framework", text: "Sequences reconnaissance, test modules and execution steps." },
-      { label: "Controlled environment", text: "Segmented target systems that exist only for the exercise." },
-      { label: "Logging & monitoring", text: "Captures what happened, from both sides, for every run." },
-      { label: "Reporting", text: "Turns collected evidence into a consistent, reviewable report." },
-    ],
-    focus: ["attacker", "framework", "recon", "modules", "execution", "environment", "targets", "segmentation", "logging", "monitoring", "reporting"],
-  },
-  {
-    id: "implementation",
     index: "04",
-    title: "Implementation",
-    heading: "Orchestration, not exploitation.",
+    title: "Conceptual architecture",
+    heading: "Planned — not deployed.",
     body: [
-      "The implementation focuses on workflow structure: environment checks, ordered stages, logging and report generation. The snippet below is an illustrative outline of that structure, not production code.",
+      "FIG. T-01 shows the conceptual experimental architecture behind the evidence model. It is a research design, not a description of a running environment. None of the stack below is deployed yet.",
     ],
-    code: {
-      caption: "Illustrative workflow outline",
-      source: `@dataclass
-class Run:
-    environment: LabEnvironment
-    stages: list[Stage]
-
-    def execute(self) -> Report:
-        assert self.environment.is_isolated(), "refuse to run outside the lab"
-        log = RunLog(run_id=uuid4())
-        for stage in self.stages:
-            log.record(stage.name, stage.run(self.environment))
-        return Report.from_log(log)`,
-    },
-    focus: ["framework", "recon", "modules", "execution"],
+    blocks: [
+      {
+        caption: "Planned stack",
+        chips: ["MITRE ATT&CK", "MITRE CALDERA", "Windows", "Sysmon", "Wazuh", "PowerShell", "Virtual Machines"],
+      },
+    ],
+    focus: allNodes,
   },
   {
-    id: "results",
+    id: "progress",
     index: "05",
-    title: "Results",
-    heading: "Results to be updated.",
-    body: ["Findings will be published here once the thesis evaluation is complete."],
-    placeholder: "RESULTS TO BE UPDATED",
-    focus: ["logging", "monitoring", "reporting"],
+    title: "Current progress",
+    heading: "Research design complete. Lab next.",
+    body: [
+      "Implementation and experiments are the next phase. No controlled lab has been built and no experiments have been run.",
+    ],
+    blocks: [
+      {
+        caption: "Completed so far",
+        items: [
+          { tag: "Done", label: "Literature review", text: "Main literature review completed." },
+          { tag: "Done", label: "Research questions", text: "Research questions defined." },
+          { tag: "Done", label: "Methodology", text: "Experimental methodology established." },
+          { tag: "Done", label: "Evidence model", text: "Evidence model designed." },
+          { tag: "Done", label: "Scope & plan", text: "Research scope and experimental plan prepared." },
+          { tag: "Current", label: "Technique review", text: "CALDERA ability / ATT&CK technique review underway." },
+        ],
+      },
+    ],
+    focus: ["framework", "abilities"],
   },
   {
-    id: "takeaways",
+    id: "roadmap",
     index: "06",
-    title: "Takeaways",
-    heading: "Written on completion.",
-    body: [
-      "Takeaways will be added with the final thesis. The working focus areas are listed below.",
+    title: "Roadmap",
+    heading: "Roadmap / next phase.",
+    body: [],
+    status: {
+      label: "Status",
+      value: "Experimental results pending",
+      text: "No experiments have been run yet. Results will be added after implementation of the controlled lab and completion of the planned experimental work.",
+    },
+    blocks: [
+      {
+        caption: "FIG. T-03 — Research roadmap",
+        items: [
+          { tag: "Done", label: "Literature review", text: "Background and related work." },
+          { tag: "Done", label: "Questions & methodology", text: "Research focus and evaluation approach." },
+          { tag: "Current", label: "Technique selection", text: "Ability and technique review." },
+          { tag: "Next 01", label: "Controlled lab", text: "Implement the isolated lab environment." },
+          { tag: "Next 02", label: "Pilot experiments", text: "Small-scale runs to check the setup." },
+          { tag: "Next 03", label: "Telemetry validation", text: "Compare reported outcomes with endpoint evidence." },
+          { tag: "Next 04", label: "Detection analysis", text: "Assess ingestion and defensive alerting." },
+          { tag: "Next 05", label: "Writing & submission", text: "Analysis, final writing and submission." },
+        ],
+      },
     ],
-    points: [
-      { label: "Isolation", text: "Automation must never widen the boundary of the test environment." },
-      { label: "Reproducibility", text: "The same run definition should produce comparable results." },
-      { label: "Reporting", text: "Every run should end in evidence a reviewer can follow." },
-    ],
-    placeholder: "TAKEAWAYS TO BE UPDATED",
-    focus: ["segmentation", "reporting"],
+    focus: ["endpoint", "isolation", "groundtruth", "sysmon", "ingestion", "ingestcheck", "alert"],
   },
 ];

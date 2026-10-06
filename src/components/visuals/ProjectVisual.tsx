@@ -3,12 +3,17 @@ import type { ProjectVisual as Kind } from "@/data/projects";
 const S = { stroke: "#fff", strokeWidth: 1, fill: "none" } as const;
 const mono = { fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 1.4, fill: "#9a9a9a" } as const;
 
-function Pipeline({ labels = ["RUN", "TEST", "LOG", "REPORT"] }: { labels?: string[] }) {
-  const xs = [30, 140, 250, 360];
+function Pipeline({ labels = ["RUN", "TEST", "LOG", "REPORT"], boundary }: { labels?: string[]; boundary?: string }) {
+  const n = Math.max(labels.length, 2);
+  const step = 330 / (n - 1);
+  const xs = Array.from({ length: n }, (_, i) => 30 + i * step);
+  // Boundary wraps stages 2–3; padding shrinks with the gap so it never touches neighbours.
+  const pad = Math.min(20, (step - 60) / 2);
+  const bx = xs[1] - pad;
   return (
     <g>
-      <rect x="120" y="40" width="210" height="140" {...S} stroke="#9a9a9a" strokeDasharray="3 5" />
-      <text x="120" y="32" {...mono}>{labels[0] === "RUN" ? "CONTROLLED ENVIRONMENT" : "ACCESS-CONTROLLED"}</text>
+      <rect x={bx} y="40" width={xs[2] + 60 + pad - bx} height="140" {...S} stroke="#9a9a9a" strokeDasharray="3 5" />
+      <text x={bx} y="32" {...mono}>{boundary ?? (labels[0] === "RUN" ? "CONTROLLED ENVIRONMENT" : "ACCESS-CONTROLLED")}</text>
       {xs.map((x, i) => (
         <g key={x}>
           <rect x={x} y="88" width="60" height="44" {...S} fill={i === 0 ? "#fff" : "#090909"} />
@@ -16,7 +21,7 @@ function Pipeline({ labels = ["RUN", "TEST", "LOG", "REPORT"] }: { labels?: stri
           <text x={x} y="152" {...mono}>{labels[i]}</text>
         </g>
       ))}
-      <rect width="6" height="6" x="-3" y="-3" fill="#fff" className="packet" style={{ offsetPath: 'path("M 90 110 L 360 110")' }} />
+      <rect width="6" height="6" x="-3" y="-3" fill="#fff" className="packet" style={{ offsetPath: `path("M 90 110 L ${xs[n - 1]} 110")` }} />
     </g>
   );
 }
@@ -91,11 +96,11 @@ function Network() {
 
 const map = { pipeline: Pipeline, graph: Graph, cloud: Cloud, network: Network };
 
-export function ProjectVisual({ kind, labels, className }: { kind: Kind; labels?: string[]; className?: string }) {
+export function ProjectVisual({ kind, labels, boundary, className }: { kind: Kind; labels?: string[]; boundary?: string; className?: string }) {
   const C = map[kind];
   return (
     <svg viewBox="0 0 430 210" className={className} aria-hidden>
-      {kind === "pipeline" ? <Pipeline labels={labels} /> : <C />}
+      {kind === "pipeline" ? <Pipeline labels={labels} boundary={boundary} /> : <C />}
     </svg>
   );
 }
