@@ -57,10 +57,10 @@ export const journey: JourneyTrack[] = [
       {
         title: "Thesis — Automation of Red Team Security in Controlled Environments",
         org: "Óbuda University",
-        period: "2026",
-        status: "Ongoing",
+        period: "2026–2027",
+        status: "In Progress",
         description:
-          "Research into automating selected security-testing workflows inside isolated lab environments.",
+          "BSc thesis on the reliability and repeatability of automated MITRE ATT&CK-based adversary emulation in a controlled Windows environment.",
         href: "#thesis",
       },
       {

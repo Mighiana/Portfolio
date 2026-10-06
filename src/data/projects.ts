@@ -19,13 +19,21 @@ export type Project = {
   year: string;
   status: string;
   summary: string;
-  /** Only technologies that are part of the actual implementation. */
+  /** Only technologies that are part of the actual implementation, unless stackLabel says otherwise. */
   stack: string[];
+  /** Shown above the stack when it is not (yet) the actual implementation, e.g. "Planned / evaluated". */
+  stackLabel?: string;
   visual: ProjectVisual;
   /** Optional node labels for the pipeline schematic. */
   visualLabels?: string[];
+  /** Optional boundary label for the pipeline schematic. */
+  visualBoundary?: string;
+  /** Figure caption override, e.g. "Conceptual architecture". */
+  visualCaption?: string;
   links: ProjectLink[];
   spec?: ProjectSpec;
+  /** Per-project overrides for spec row headings. */
+  specLabels?: Partial<Record<keyof ProjectSpec, string>>;
   /** Internal anchor for the full case study, if any. */
   caseStudy?: string;
   flagship?: boolean;
@@ -39,22 +47,31 @@ export const projects: Project[] = [
   {
     id: "01",
     title: "Automation of Red Team Security in Controlled Environments",
-    type: "Thesis Project",
-    year: "2026",
-    status: "Ongoing",
+    type: "BSc Thesis",
+    year: "2026–2027",
+    status: "In Progress",
     summary:
-      "Bachelor thesis exploring how selected parts of security-testing workflows in isolated lab environments can be automated while keeping runs reproducible, contained and clearly reported.",
-    // TODO(projects): list technologies once the implementation is final.
-    stack: [],
+      "BSc thesis investigating automated red-team security testing in a controlled Windows environment. The literature review, research questions and experimental methodology have been completed; the next phase focuses on CALDERA-based adversary emulation, endpoint telemetry validation and Wazuh detection analysis.",
+    stack: ["MITRE ATT&CK", "MITRE CALDERA", "Windows", "Sysmon", "Wazuh", "PowerShell", "Virtual Machines"],
+    stackLabel: "Planned / evaluated",
     visual: "pipeline",
+    visualLabels: ["CALDERA", "ENDPOINT", "SYSMON", "WAZUH"],
+    visualBoundary: "CONTROLLED LAB",
+    visualCaption: "Conceptual architecture",
     links: [],
+    specLabels: {
+      built: "Completed so far",
+      architecture: "Planned architecture",
+      implementation: "Current work",
+      decisions: "Research design",
+    },
     spec: {
-      problem: "Manual preparation, execution, log collection and reporting make security-testing runs hard to repeat and compare.",
-      built: "An automation workflow for security testing inside an isolated lab environment, from run definition to report.",
-      architecture: "Test machine → automation framework → controlled target environment → logging & monitoring → reporting.",
-      implementation: "Environment checks, ordered test stages (reconnaissance, test modules, execution), run logging and report generation.",
-      decisions: "Runs refuse to start outside the isolated lab. The focus is orchestration and reproducibility, not exploitation.",
-      result: "Ongoing. Results will be published when the thesis evaluation is complete.",
+      problem: "Automated adversary-emulation frameworks report whether a step ran, but not whether it actually happened on the endpoint, reached monitoring, or was detected.",
+      built: "Literature review, three research questions, experimental methodology, evidence model, thesis Work Sheet and experimental plan. No lab or experiments yet.",
+      architecture: "Conceptual evidence chain: CALDERA result → Windows endpoint → Sysmon ground truth → Wazuh ingestion → defensive alert.",
+      implementation: "Reviewing and validating suitable CALDERA abilities and MITRE ATT&CK techniques before implementing the controlled lab and running pilot experiments.",
+      decisions: "Framework-reported outcomes are compared with independent endpoint telemetry before detection is assessed. Controlled, isolated lab only; no live or third-party systems.",
+      result: "In progress — research / experimental design. No experiments have been run and no results are available yet.",
     },
     caseStudy: "#thesis",
     flagship: true,

@@ -3,12 +3,12 @@ import type { ProjectVisual as Kind } from "@/data/projects";
 const S = { stroke: "#fff", strokeWidth: 1, fill: "none" } as const;
 const mono = { fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 1.4, fill: "#9a9a9a" } as const;
 
-function Pipeline({ labels = ["RUN", "TEST", "LOG", "REPORT"] }: { labels?: string[] }) {
+function Pipeline({ labels = ["RUN", "TEST", "LOG", "REPORT"], boundary }: { labels?: string[]; boundary?: string }) {
   const xs = [30, 140, 250, 360];
   return (
     <g>
       <rect x="120" y="40" width="210" height="140" {...S} stroke="#9a9a9a" strokeDasharray="3 5" />
-      <text x="120" y="32" {...mono}>{labels[0] === "RUN" ? "CONTROLLED ENVIRONMENT" : "ACCESS-CONTROLLED"}</text>
+      <text x="120" y="32" {...mono}>{boundary ?? (labels[0] === "RUN" ? "CONTROLLED ENVIRONMENT" : "ACCESS-CONTROLLED")}</text>
       {xs.map((x, i) => (
         <g key={x}>
           <rect x={x} y="88" width="60" height="44" {...S} fill={i === 0 ? "#fff" : "#090909"} />
@@ -91,11 +91,11 @@ function Network() {
 
 const map = { pipeline: Pipeline, graph: Graph, cloud: Cloud, network: Network };
 
-export function ProjectVisual({ kind, labels, className }: { kind: Kind; labels?: string[]; className?: string }) {
+export function ProjectVisual({ kind, labels, boundary, className }: { kind: Kind; labels?: string[]; boundary?: string; className?: string }) {
   const C = map[kind];
   return (
     <svg viewBox="0 0 430 210" className={className} aria-hidden>
-      {kind === "pipeline" ? <Pipeline labels={labels} /> : <C />}
+      {kind === "pipeline" ? <Pipeline labels={labels} boundary={boundary} /> : <C />}
     </svg>
   );
 }

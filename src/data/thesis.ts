@@ -1,29 +1,28 @@
 export const thesis = {
-  label: "Thesis project",
+  label: "BSc thesis",
   titleLines: ["Automation of", "Red Team Security", "in Controlled Environments"],
   title: "Automation of Red Team Security in Controlled Environments",
   meta: [
-    { label: "Type", value: "Thesis Project" },
-    { label: "Domain", value: "Cybersecurity / Security Automation" },
-    { label: "Year", value: "2026" },
-    { label: "Status", value: "Ongoing" },
+    { label: "Type", value: "BSc Thesis" },
+    { label: "Status", value: "In Progress" },
+    { label: "Period", value: "2026–2027" },
+    { label: "Stage", value: "Research / Experimental Design" },
   ],
   scope:
-    "Controlled, isolated security research. No live systems, no third-party targets.",
+    "Controlled, isolated, authorized academic security research. No live systems, no third-party targets.",
 } as const;
 
 export type DiagramNodeId =
-  | "attacker"
   | "framework"
-  | "recon"
-  | "modules"
-  | "execution"
-  | "environment"
-  | "targets"
-  | "segmentation"
-  | "logging"
-  | "monitoring"
-  | "reporting";
+  | "abilities"
+  | "operation"
+  | "endpoint"
+  | "isolation"
+  | "groundtruth"
+  | "sysmon"
+  | "ingestion"
+  | "ingestcheck"
+  | "alert";
 
 export type Chapter = {
   id: string;
@@ -38,6 +37,8 @@ export type Chapter = {
   code?: { caption: string; source: string };
 };
 
+const allNodes: DiagramNodeId[] = ["framework", "abilities", "operation", "endpoint", "isolation", "groundtruth", "sysmon", "ingestion", "ingestcheck", "alert"];
+
 export const chapters: Chapter[] = [
   {
     id: "context",
@@ -45,70 +46,73 @@ export const chapters: Chapter[] = [
     title: "Context",
     heading: "Security testing involves repeatable workflows.",
     body: [
-      "Security testing in controlled environments can involve repetitive preparation, execution, monitoring and reporting steps. This project explores how selected parts of those workflows can be automated while preserving reproducibility, isolation and clear reporting.",
+      "This BSc thesis investigates the reliability and repeatability of automated MITRE ATT&CK-based adversary emulation in a controlled Windows environment.",
+      "It evaluates whether framework-reported execution outcomes correspond with independently observed endpoint activity, and whether confirmed activities are detected by defensive monitoring.",
     ],
-    focus: ["attacker", "framework", "environment", "logging", "reporting"],
+    focus: allNodes,
   },
   {
     id: "problem",
     index: "02",
     title: "Problem",
-    heading: "Manual runs are hard to repeat and compare.",
+    heading: "A reported result is not an observed result.",
     body: [
-      "When environment preparation, test execution, log collection and reporting are done by hand, two runs of the same exercise rarely look the same. That makes results harder to reproduce, compare and review.",
-      "The thesis investigates which of these steps can be automated — and how — without weakening the isolation of the test environment.",
+      "Automated adversary-emulation frameworks such as MITRE CALDERA report whether each step ran. That report alone does not show what actually happened on the endpoint, whether the telemetry reached the monitoring stack, or whether a defensive alert was raised.",
+      "Without independent evidence at each layer, a missed detection cannot be told apart from an action that never ran or telemetry that never arrived.",
     ],
-    focus: ["framework", "environment"],
+    focus: ["framework", "operation", "groundtruth"],
   },
   {
     id: "architecture",
     index: "03",
     title: "Architecture",
-    heading: "A pipeline from test machine to report.",
+    heading: "Four questions, one evidence chain.",
     body: [
-      "The conceptual architecture separates the machine that drives tests, the automation framework, the isolated target environment, the logging layer and the reporting stage. Each stage hands structured output to the next.",
+      "The conceptual experimental architecture follows the thesis evidence model: framework results → endpoint ground truth → monitoring ingestion → defensive alerts. Each layer is compared with the one before it.",
+      "This is the planned design. It does not represent a deployed environment.",
     ],
     points: [
-      { label: "Test machine", text: "Starts and supervises test runs." },
-      { label: "Automation framework", text: "Sequences reconnaissance, test modules and execution steps." },
-      { label: "Controlled environment", text: "Segmented target systems that exist only for the exercise." },
-      { label: "Logging & monitoring", text: "Captures what happened, from both sides, for every run." },
-      { label: "Reporting", text: "Turns collected evidence into a consistent, reviewable report." },
+      { label: "Framework result", text: "What CALDERA says happened." },
+      { label: "Endpoint ground truth", text: "What actually happened on the Windows endpoint, as recorded by Sysmon." },
+      { label: "Monitoring ingestion", text: "What telemetry reached Wazuh." },
+      { label: "Defensive detection", text: "What the defensive system detected." },
     ],
-    focus: ["attacker", "framework", "recon", "modules", "execution", "environment", "targets", "segmentation", "logging", "monitoring", "reporting"],
+    focus: allNodes,
   },
   {
-    id: "implementation",
+    id: "progress",
     index: "04",
-    title: "Implementation",
-    heading: "Orchestration, not exploitation.",
+    title: "Progress",
+    heading: "Research design complete. Lab next.",
     body: [
-      "The implementation focuses on workflow structure: environment checks, ordered stages, logging and report generation. The snippet below is an illustrative outline of that structure, not production code.",
+      "The literature review, research questions and experimental methodology are complete. The controlled lab, CALDERA deployment and Sysmon / Wazuh integration have not been built yet, and no experiments have been run.",
     ],
-    code: {
-      caption: "Illustrative workflow outline",
-      source: `@dataclass
-class Run:
-    environment: LabEnvironment
-    stages: list[Stage]
-
-    def execute(self) -> Report:
-        assert self.environment.is_isolated(), "refuse to run outside the lab"
-        log = RunLog(run_id=uuid4())
-        for stage in self.stages:
-            log.record(stage.name, stage.run(self.environment))
-        return Report.from_log(log)`,
-    },
-    focus: ["framework", "recon", "modules", "execution"],
+    points: [
+      { label: "Done — Literature review", text: "Automated adversary emulation, cyber ranges, endpoint telemetry and defensive detection." },
+      { label: "Done — Research questions", text: "Three research questions and the experimental evaluation methodology." },
+      { label: "Done — Evidence model", text: "Framework results → endpoint ground truth → monitoring ingestion → defensive alerts." },
+      { label: "Done — Work Sheet & plan", text: "Thesis Work Sheet and experimental plan prepared." },
+      { label: "Active — Ability review", text: "Reviewing and validating suitable CALDERA abilities and MITRE ATT&CK techniques." },
+      { label: "Planned / evaluated stack", text: "MITRE ATT&CK · MITRE CALDERA · Windows · Sysmon · Wazuh · PowerShell · Virtual Machines" },
+    ],
+    focus: ["framework", "abilities"],
   },
   {
     id: "results",
     index: "05",
     title: "Results",
-    heading: "Results to be updated.",
-    body: ["Findings will be published here once the thesis evaluation is complete."],
-    placeholder: "RESULTS TO BE UPDATED",
-    focus: ["logging", "monitoring", "reporting"],
+    heading: "No results yet.",
+    body: [
+      "No experiments have been run. Results will be added only after the controlled lab is implemented and the experiments are complete.",
+    ],
+    placeholder: "RESULTS PENDING",
+    points: [
+      { label: "Next — Controlled lab", text: "Implement the isolated Windows lab environment." },
+      { label: "Next — Pilot experiments", text: "Run pilot experiments with the selected CALDERA abilities." },
+      { label: "Next — Telemetry validation", text: "Check framework-reported outcomes against endpoint telemetry." },
+      { label: "Next — Detection analysis", text: "Analyse which confirmed activities Wazuh ingests and alerts on." },
+    ],
+    focus: ["groundtruth", "sysmon", "ingestion", "ingestcheck", "alert"],
   },
   {
     id: "takeaways",
@@ -116,14 +120,14 @@ class Run:
     title: "Takeaways",
     heading: "Written on completion.",
     body: [
-      "Takeaways will be added with the final thesis. The working focus areas are listed below.",
+      "Takeaways will be added with the final thesis. The working principles are listed below.",
     ],
     points: [
-      { label: "Isolation", text: "Automation must never widen the boundary of the test environment." },
-      { label: "Reproducibility", text: "The same run definition should produce comparable results." },
-      { label: "Reporting", text: "Every run should end in evidence a reviewer can follow." },
+      { label: "Isolation", text: "Experiments stay inside a controlled, isolated lab. No live systems, no third-party targets." },
+      { label: "Independent evidence", text: "Framework-reported outcomes are checked against endpoint telemetry, not taken at face value." },
+      { label: "Repeatability", text: "The same experiment definition should produce comparable evidence across runs." },
     ],
     placeholder: "TAKEAWAYS TO BE UPDATED",
-    focus: ["segmentation", "reporting"],
+    focus: ["isolation", "groundtruth"],
   },
 ];

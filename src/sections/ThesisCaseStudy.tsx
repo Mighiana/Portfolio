@@ -77,7 +77,7 @@ export function ThesisCaseStudy() {
     <section id="thesis" data-nav="projects" data-theme="dark" aria-labelledby="thesis-title" className="relative bg-void text-white">
       {/* Full-screen chapter opener */}
       <div className="shell flex flex-col pb-10 pt-20 md:pt-24">
-        <SectionHeader index="03.1" label="Flagship case study" aside="Thesis / 2026" />
+        <SectionHeader index="03.1" label="Flagship case study" aside="Thesis / 2026–2027" />
         <div className="flex flex-col py-10 md:py-12">
           <p className="reveal meta flex items-center gap-3 text-fog">
             <span aria-hidden className="size-1.5 bg-white" /> {thesis.label}
@@ -105,7 +105,7 @@ export function ThesisCaseStudy() {
       <div className="border-t border-graphite">
         <div className="shell py-16 md:py-20">
           <div className="reveal meta mb-10 flex items-center justify-between text-ash">
-            <span><span className="text-white">FIG. 04</span> / System architecture — conceptual</span>
+            <span><span className="text-white">FIG. 04</span> / Conceptual experimental architecture — planned, not deployed</span>
             <span className="hidden sm:inline">Highlight: {chapter.title}</span>
           </div>
           <ArchitectureDiagramHorizontal focus={chapter.focus} className="reveal hidden md:block" />

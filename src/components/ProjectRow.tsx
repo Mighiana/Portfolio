@@ -54,8 +54,9 @@ export function ProjectRow({ project, index }: { project: Project; index: number
             {project.summary}
           </p>
 
+          {project.stackLabel && project.stack.length ? <p className="meta mt-6 text-ash">{project.stackLabel}</p> : null}
           {project.stack.length ? (
-            <ul className="relative z-10 mt-6 flex flex-wrap gap-2" aria-label="Tech stack">
+            <ul className={cn("relative z-10 flex flex-wrap gap-2", project.stackLabel ? "mt-3" : "mt-6")} aria-label={project.stackLabel ? `Tech stack (${project.stackLabel})` : "Tech stack"}>
               {project.stack.map((s) => (
                 <li key={s} className="meta border border-graphite px-2.5 py-1.5 text-fog">{s}</li>
               ))}
@@ -82,10 +83,11 @@ export function ProjectRow({ project, index }: { project: Project; index: number
             <div aria-hidden className="absolute inset-0 opacity-40 [background-image:linear-gradient(#242424_1px,transparent_1px),linear-gradient(90deg,#242424_1px,transparent_1px)] [background-size:32px_32px]" />
             <ProjectVisual
               labels={project.visualLabels}
+              boundary={project.visualBoundary}
               kind={project.visual}
               className="relative h-full w-full p-4 opacity-80 transition-opacity duration-700 group-hover:opacity-100"
             />
-            <span className="meta absolute bottom-3 left-3 text-ash">FIG. P—{project.id} / Architecture</span>
+            <span className="meta absolute bottom-3 left-3 text-ash">FIG. P—{project.id} / {project.visualCaption ?? "Architecture"}</span>
           </div>
         </div>
 
@@ -93,7 +95,7 @@ export function ProjectRow({ project, index }: { project: Project; index: number
           <dl className="relative z-10 grid grid-cols-1 border-l border-t border-graphite sm:grid-cols-2 lg:col-span-12 lg:grid-cols-3">
             {specRows.map(([key, label]) => (
               <div key={key} className="border-b border-r border-graphite p-4 md:p-5">
-                <dt className="meta text-white">{label}</dt>
+                <dt className="meta text-white">{project.specLabels?.[key] ?? label}</dt>
                 <dd className="mt-2.5 text-[15px] leading-relaxed text-fog">{project.spec![key]}</dd>
               </div>
             ))}

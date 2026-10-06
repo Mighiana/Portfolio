@@ -8,37 +8,44 @@ import { cn } from "@/lib/cn";
 type Stage = { id: DiagramNodeId; code: string; title: string[]; note: string; subs: { id: DiagramNodeId; label: string; note: string }[] };
 
 export const stages: Stage[] = [
-  { id: "attacker", code: "M-01", title: ["Test /", "attacker machine"], note: "Starts and supervises test runs.", subs: [] },
   {
     id: "framework",
-    code: "M-02",
-    title: ["Automation", "framework"],
-    note: "Sequences test stages in a defined, repeatable order.",
+    code: "E-01",
+    title: ["CALDERA /", "framework result"],
+    note: "What CALDERA says happened.",
     subs: [
-      { id: "recon", label: "Reconnaissance", note: "Discovery stage scoped to the lab." },
-      { id: "modules", label: "Test modules", note: "Self-contained, configurable test steps." },
-      { id: "execution", label: "Execution", note: "Ordered, logged runs of selected modules." },
+      { id: "abilities", label: "ATT&CK abilities", note: "Candidate CALDERA abilities, currently under review." },
+      { id: "operation", label: "Operation report", note: "Framework-reported execution outcome." },
     ],
   },
   {
-    id: "environment",
-    code: "M-03",
-    title: ["Controlled target", "environment"],
-    note: "Isolated systems that exist only for the exercise.",
-    subs: [
-      { id: "targets", label: "Target systems", note: "Lab-only hosts under test." },
-      { id: "segmentation", label: "Segmentation", note: "Keeps the exercise inside its boundary." },
-    ],
+    id: "endpoint",
+    code: "E-02",
+    title: ["Windows", "endpoint"],
+    note: "Lab VM where the selected abilities would run.",
+    subs: [{ id: "isolation", label: "Isolated VM", note: "Controlled virtual machine. No live or third-party systems." }],
   },
   {
-    id: "logging",
-    code: "M-04",
-    title: ["Logging &", "monitoring"],
-    note: "Captures what happened during every run.",
-    subs: [{ id: "monitoring", label: "Monitoring", note: "Observes the environment while tests run." }],
+    id: "groundtruth",
+    code: "E-03",
+    title: ["Sysmon /", "ground truth"],
+    note: "What actually happened on the endpoint.",
+    subs: [{ id: "sysmon", label: "Sysmon events", note: "Independent record of endpoint activity." }],
   },
-  { id: "reporting", code: "M-05", title: ["Reporting /", "analysis"], note: "Turns collected evidence into a reviewable report.", subs: [] },
+  {
+    id: "ingestion",
+    code: "E-04",
+    title: ["Wazuh", "ingestion"],
+    note: "What telemetry reached Wazuh.",
+    subs: [{ id: "ingestcheck", label: "Ingestion check", note: "Endpoint events compared with events received." }],
+  },
+  { id: "alert", code: "E-05", title: ["Defensive alert /", "detection"], note: "What the defensive system detected.", subs: [] },
 ];
+
+/** Stage drawn inside the controlled-lab boundary. */
+const labStage = 1;
+const ariaLabel =
+  "Conceptual experimental architecture (planned, not deployed): CALDERA framework result, Windows endpoint, Sysmon endpoint ground truth, Wazuh ingestion, defensive alert and detection.";
 
 const allNotes = new Map<DiagramNodeId, { label: string; note: string }>();
 for (const s of stages) {
@@ -122,7 +129,7 @@ export function ArchitectureDiagramHorizontal({ focus, className }: Props) {
 
   return (
     <figure className={className}>
-      <svg viewBox={`0 0 ${W} 400`} className="h-auto w-full" role="group" aria-label="Thesis architecture: test machine, automation framework, controlled target environment, logging and monitoring, reporting and analysis.">
+      <svg viewBox={`0 0 ${W} 400`} className="h-auto w-full" role="group" aria-label={ariaLabel}>
         <defs>
           <marker id="arrow-h" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
             <path d="M0 0 L8 4 L0 8" fill="none" stroke="#fff" strokeWidth="1" />
@@ -130,8 +137,8 @@ export function ArchitectureDiagramHorizontal({ focus, className }: Props) {
         </defs>
 
         {/* controlled-environment boundary */}
-        <rect x={x(2) - 14} y={24} width={boxW + 28} height={360} fill="none" stroke="#9a9a9a" strokeWidth="1" className="dash-flow" opacity={lit("segmentation") || lit("environment") ? 0.9 : 0.25} />
-        <text x={x(2) - 14} y={16} fill="#9a9a9a" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="1.5">ISOLATED / SEGMENTED</text>
+        <rect x={x(labStage) - 14} y={24} width={boxW + 28} height={360} fill="none" stroke="#9a9a9a" strokeWidth="1" className="dash-flow" opacity={lit("isolation") || lit("endpoint") ? 0.9 : 0.25} />
+        <text x={x(labStage) - 14} y={16} fill="#9a9a9a" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="1.5">ISOLATED / CONTROLLED</text>
 
         {stages.slice(0, 4).map((_, i) => (
           <g key={i} style={{ opacity: pathLit(i) ? 1 : 0.2, transition: "opacity .4s" }}>
@@ -188,13 +195,13 @@ export function ArchitectureDiagramVertical({ focus, className }: Props) {
 
   return (
     <figure className={className}>
-      <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="group" aria-label="Thesis architecture, top to bottom: test machine, automation framework, controlled target environment, logging and monitoring, reporting and analysis.">
+      <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="group" aria-label={ariaLabel}>
         <defs>
           <marker id="arrow-v" viewBox="0 0 8 8" refX="4" refY="7" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0 0 L4 8 L8 0" fill="none" stroke="#fff" strokeWidth="1" transform="rotate(-90 4 4)" />
           </marker>
         </defs>
-        <rect x="4" y={y(2) - 10} width={W - 8} height={boxH + 20} fill="none" stroke="#9a9a9a" className="dash-flow" opacity={lit("environment") || lit("segmentation") ? 0.9 : 0.3} />
+        <rect x="4" y={y(labStage) - 10} width={W - 8} height={boxH + 20} fill="none" stroke="#9a9a9a" className="dash-flow" opacity={lit("endpoint") || lit("isolation") ? 0.9 : 0.3} />
         {stages.slice(0, 4).map((_, i) => (
           <g key={i} style={{ opacity: pathLit(i) ? 1 : 0.2, transition: "opacity .4s" }}>
             <motion.line x1={36} y1={y(i) + boxH} x2={36} y2={y(i + 1) - 14} stroke="#fff" strokeWidth={hover && pathLit(i) ? 2 : 1} markerEnd="url(#arrow-v)" {...draw(reduce, 0.12 * i)} />
