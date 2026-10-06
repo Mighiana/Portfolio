@@ -1,6 +1,12 @@
+/**
+ * Public, sanitized thesis summary. Thesis documents, exact research-question
+ * wording, ability/technique selection, procedure and thresholds are private
+ * and must not be added here without the author's explicit approval.
+ */
 export const thesis = {
-  label: "BSc thesis",
-  titleLines: ["Automation of", "Red Team Security", "in Controlled Environments"],
+  label: "Active BSc cybersecurity research",
+  statementLines: ["A reported result", "is not an", "observed result."],
+  subtitle: "Validating automated adversary emulation against endpoint telemetry and detection.",
   title: "Automation of Red Team Security in Controlled Environments",
   meta: [
     { label: "Type", value: "BSc Thesis" },
@@ -8,8 +14,8 @@ export const thesis = {
     { label: "Period", value: "2026–2027" },
     { label: "Stage", value: "Research / Experimental Design" },
   ],
-  scope:
-    "Controlled, isolated, authorized academic security research. No live systems, no third-party targets.",
+  supervision: { label: "Supervisor", value: "Rigó Ernő — Óbuda University" },
+  scope: "Controlled, isolated, authorized academic security research. No live systems. No third-party targets.",
 } as const;
 
 export type DiagramNodeId =
@@ -24,6 +30,13 @@ export type DiagramNodeId =
   | "ingestcheck"
   | "alert";
 
+export type ChapterBlock = {
+  /** Small caption above the block, e.g. "FIG. T-02 — Evidence model". */
+  caption: string;
+  items?: { label: string; text: string; tag?: string }[];
+  chips?: string[];
+};
+
 export type Chapter = {
   id: string;
   index: string;
@@ -32,9 +45,8 @@ export type Chapter = {
   body: string[];
   /** Diagram nodes highlighted while this chapter is open. */
   focus: DiagramNodeId[];
-  placeholder?: string;
-  points?: { label: string; text: string }[];
-  code?: { caption: string; source: string };
+  status?: { label: string; value: string; text: string };
+  blocks?: ChapterBlock[];
 };
 
 const allNodes: DiagramNodeId[] = ["framework", "abilities", "operation", "endpoint", "isolation", "groundtruth", "sysmon", "ingestion", "ingestcheck", "alert"];
@@ -46,88 +58,134 @@ export const chapters: Chapter[] = [
     title: "Context",
     heading: "Security testing involves repeatable workflows.",
     body: [
-      "This BSc thesis investigates the reliability and repeatability of automated MITRE ATT&CK-based adversary emulation in a controlled Windows environment.",
-      "It evaluates whether framework-reported execution outcomes correspond with independently observed endpoint activity, and whether confirmed activities are detected by defensive monitoring.",
+      "Investigating the reliability and repeatability of automated MITRE ATT&CK-based adversary emulation in a controlled Windows environment.",
+      "The research examines whether framework-reported outcomes correspond with independently observed endpoint activity, and whether confirmed activity becomes visible to defensive monitoring.",
+    ],
+    blocks: [
+      {
+        caption: "Research foundation",
+        chips: ["MITRE ATT&CK", "MITRE CALDERA", "Microsoft Sysmon", "Wazuh"],
+        items: [
+          { label: "Academic literature", text: "Adversary emulation, cyber ranges, endpoint telemetry and defensive detection." },
+        ],
+      },
     ],
     focus: allNodes,
   },
   {
-    id: "problem",
+    id: "focus",
     index: "02",
-    title: "Problem",
-    heading: "A reported result is not an observed result.",
+    title: "Research focus",
+    heading: "Three areas of focus.",
     body: [
-      "Automated adversary-emulation frameworks such as MITRE CALDERA report whether each step ran. That report alone does not show what actually happened on the endpoint, whether the telemetry reached the monitoring stack, or whether a defensive alert was raised.",
-      "Without independent evidence at each layer, a missed detection cannot be told apart from an action that never ran or telemetry that never arrived.",
+      "Automated frameworks report whether each step ran. The thesis asks how far that report can be trusted, and what happens to the activity after it.",
     ],
-    focus: ["framework", "operation", "groundtruth"],
+    blocks: [
+      {
+        caption: "Research focus",
+        items: [
+          { label: "Reported execution", text: "Reliability and repeatability of framework-reported execution." },
+          { label: "Endpoint agreement", text: "Agreement between reported execution and endpoint-observed activity." },
+          { label: "Detection visibility", text: "Visibility and detection of confirmed activity in defensive monitoring." },
+        ],
+      },
+    ],
+    focus: ["framework", "operation", "groundtruth", "alert"],
+  },
+  {
+    id: "methodology",
+    index: "03",
+    title: "Methodology",
+    heading: "Four layers of evidence, compared.",
+    body: [
+      "The planned evaluation compares each layer with the one before it, so a missed detection can be told apart from an action that never ran or telemetry that never arrived.",
+    ],
+    blocks: [
+      {
+        caption: "FIG. T-02 — Evidence model",
+        items: [
+          { label: "Framework report", text: "What the adversary-emulation framework reports." },
+          { label: "Endpoint evidence", text: "What endpoint evidence independently shows." },
+          { label: "Monitoring ingestion", text: "What telemetry reaches the monitoring platform." },
+          { label: "Defensive alert", text: "Whether defensive monitoring surfaces the confirmed activity." },
+        ],
+      },
+      {
+        caption: "Working principles",
+        items: [
+          { label: "Isolation", text: "Research remains within a controlled academic environment." },
+          { label: "Independent evidence", text: "Framework-reported outcomes are evaluated against independent endpoint evidence." },
+          { label: "Repeatability", text: "The methodology is designed to support comparable evidence across repeated experimental runs." },
+        ],
+      },
+    ],
+    focus: ["framework", "groundtruth", "ingestion", "alert"],
   },
   {
     id: "architecture",
-    index: "03",
-    title: "Architecture",
-    heading: "Four questions, one evidence chain.",
+    index: "04",
+    title: "Conceptual architecture",
+    heading: "Planned — not deployed.",
     body: [
-      "The conceptual experimental architecture follows the thesis evidence model: framework results → endpoint ground truth → monitoring ingestion → defensive alerts. Each layer is compared with the one before it.",
-      "This is the planned design. It does not represent a deployed environment.",
+      "FIG. T-01 shows the conceptual experimental architecture behind the evidence model. It is a research design, not a description of a running environment. None of the stack below is deployed yet.",
     ],
-    points: [
-      { label: "Framework result", text: "What CALDERA says happened." },
-      { label: "Endpoint ground truth", text: "What actually happened on the Windows endpoint, as recorded by Sysmon." },
-      { label: "Monitoring ingestion", text: "What telemetry reached Wazuh." },
-      { label: "Defensive detection", text: "What the defensive system detected." },
+    blocks: [
+      {
+        caption: "Planned stack",
+        chips: ["MITRE ATT&CK", "MITRE CALDERA", "Windows", "Sysmon", "Wazuh", "PowerShell", "Virtual Machines"],
+      },
     ],
     focus: allNodes,
   },
   {
     id: "progress",
-    index: "04",
-    title: "Progress",
+    index: "05",
+    title: "Current progress",
     heading: "Research design complete. Lab next.",
     body: [
-      "The literature review, research questions and experimental methodology are complete. The controlled lab, CALDERA deployment and Sysmon / Wazuh integration have not been built yet, and no experiments have been run.",
+      "Implementation and experiments are the next phase. No controlled lab has been built and no experiments have been run.",
     ],
-    points: [
-      { label: "Done — Literature review", text: "Automated adversary emulation, cyber ranges, endpoint telemetry and defensive detection." },
-      { label: "Done — Research questions", text: "Three research questions and the experimental evaluation methodology." },
-      { label: "Done — Evidence model", text: "Framework results → endpoint ground truth → monitoring ingestion → defensive alerts." },
-      { label: "Done — Work Sheet & plan", text: "Thesis Work Sheet and experimental plan prepared." },
-      { label: "Active — Ability review", text: "Reviewing and validating suitable CALDERA abilities and MITRE ATT&CK techniques." },
-      { label: "Planned / evaluated stack", text: "MITRE ATT&CK · MITRE CALDERA · Windows · Sysmon · Wazuh · PowerShell · Virtual Machines" },
+    blocks: [
+      {
+        caption: "Completed so far",
+        items: [
+          { tag: "Done", label: "Literature review", text: "Main literature review completed." },
+          { tag: "Done", label: "Research questions", text: "Research questions defined." },
+          { tag: "Done", label: "Methodology", text: "Experimental methodology established." },
+          { tag: "Done", label: "Evidence model", text: "Evidence model designed." },
+          { tag: "Done", label: "Scope & plan", text: "Research scope and experimental plan prepared." },
+          { tag: "Current", label: "Technique review", text: "CALDERA ability / ATT&CK technique review underway." },
+        ],
+      },
     ],
     focus: ["framework", "abilities"],
   },
   {
-    id: "results",
-    index: "05",
-    title: "Results",
-    heading: "No results yet.",
-    body: [
-      "No experiments have been run. Results will be added only after the controlled lab is implemented and the experiments are complete.",
-    ],
-    placeholder: "RESULTS PENDING",
-    points: [
-      { label: "Next — Controlled lab", text: "Implement the isolated Windows lab environment." },
-      { label: "Next — Pilot experiments", text: "Run pilot experiments with the selected CALDERA abilities." },
-      { label: "Next — Telemetry validation", text: "Check framework-reported outcomes against endpoint telemetry." },
-      { label: "Next — Detection analysis", text: "Analyse which confirmed activities Wazuh ingests and alerts on." },
-    ],
-    focus: ["groundtruth", "sysmon", "ingestion", "ingestcheck", "alert"],
-  },
-  {
-    id: "takeaways",
+    id: "roadmap",
     index: "06",
-    title: "Takeaways",
-    heading: "Written on completion.",
-    body: [
-      "Takeaways will be added with the final thesis. The working principles are listed below.",
+    title: "Roadmap",
+    heading: "Roadmap / next phase.",
+    body: [],
+    status: {
+      label: "Status",
+      value: "Experimental results pending",
+      text: "No experiments have been run yet. Results will be added after implementation of the controlled lab and completion of the planned experimental work.",
+    },
+    blocks: [
+      {
+        caption: "FIG. T-03 — Research roadmap",
+        items: [
+          { tag: "Done", label: "Literature review", text: "Background and related work." },
+          { tag: "Done", label: "Questions & methodology", text: "Research focus and evaluation approach." },
+          { tag: "Current", label: "Technique selection", text: "Ability and technique review." },
+          { tag: "Next 01", label: "Controlled lab", text: "Implement the isolated lab environment." },
+          { tag: "Next 02", label: "Pilot experiments", text: "Small-scale runs to check the setup." },
+          { tag: "Next 03", label: "Telemetry validation", text: "Compare reported outcomes with endpoint evidence." },
+          { tag: "Next 04", label: "Detection analysis", text: "Assess ingestion and defensive alerting." },
+          { tag: "Next 05", label: "Writing & submission", text: "Analysis, final writing and submission." },
+        ],
+      },
     ],
-    points: [
-      { label: "Isolation", text: "Experiments stay inside a controlled, isolated lab. No live systems, no third-party targets." },
-      { label: "Independent evidence", text: "Framework-reported outcomes are checked against endpoint telemetry, not taken at face value." },
-      { label: "Repeatability", text: "The same experiment definition should produce comparable evidence across runs." },
-    ],
-    placeholder: "TAKEAWAYS TO BE UPDATED",
-    focus: ["isolation", "groundtruth"],
+    focus: ["endpoint", "isolation", "groundtruth", "sysmon", "ingestion", "ingestcheck", "alert"],
   },
 ];

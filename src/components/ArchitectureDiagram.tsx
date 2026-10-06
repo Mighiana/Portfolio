@@ -22,13 +22,13 @@ export const stages: Stage[] = [
     id: "endpoint",
     code: "E-02",
     title: ["Windows", "endpoint"],
-    note: "Lab VM where the selected abilities would run.",
-    subs: [{ id: "isolation", label: "Isolated VM", note: "Controlled virtual machine. No live or third-party systems." }],
+    note: "Planned lab VM. Not deployed.",
+    subs: [{ id: "isolation", label: "Isolated VM", note: "Controlled virtual machine inside the lab boundary." }],
   },
   {
     id: "groundtruth",
     code: "E-03",
-    title: ["Sysmon /", "ground truth"],
+    title: ["Sysmon /", "endpoint evidence"],
     note: "What actually happened on the endpoint.",
     subs: [{ id: "sysmon", label: "Sysmon events", note: "Independent record of endpoint activity." }],
   },
@@ -45,7 +45,7 @@ export const stages: Stage[] = [
 /** Stage drawn inside the controlled-lab boundary. */
 const labStage = 1;
 const ariaLabel =
-  "Conceptual experimental architecture (planned, not deployed): CALDERA framework result, Windows endpoint, Sysmon endpoint ground truth, Wazuh ingestion, defensive alert and detection.";
+  "Conceptual experimental architecture (planned, not deployed): CALDERA framework result, Windows endpoint, Sysmon endpoint evidence, Wazuh ingestion, defensive alert and detection.";
 
 const allNotes = new Map<DiagramNodeId, { label: string; note: string }>();
 for (const s of stages) {
@@ -232,7 +232,7 @@ export function ArchitectureDiagramVertical({ focus, className }: Props) {
               type="button"
               aria-pressed={hover === sub.id}
               onClick={bind(sub.id).onClick}
-              className={cn("meta flex min-h-11 w-full items-center justify-between px-3 text-left transition-colors", hover === sub.id ? "bg-white text-black" : lit(sub.id) ? "text-fog" : "text-ash/60")}
+              className={cn("meta flex min-h-11 w-full items-center justify-between px-3 text-left transition-colors", hover === sub.id ? "bg-white text-black" : lit(sub.id) ? "text-fog" : "text-ash")}
             >
               <span>{sub.label}</span>
               <span className={hover === sub.id ? "text-black" : "text-ash"}>{sub.parent}</span>

@@ -30,6 +30,8 @@ export type Project = {
   visualBoundary?: string;
   /** Figure caption override, e.g. "Conceptual architecture". */
   visualCaption?: string;
+  /** Figure number override, e.g. "T-01" when the card shows a case-study figure. */
+  visualFigure?: string;
   links: ProjectLink[];
   spec?: ProjectSpec;
   /** Per-project overrides for spec row headings. */
@@ -51,13 +53,14 @@ export const projects: Project[] = [
     year: "2026–2027",
     status: "In Progress",
     summary:
-      "BSc thesis investigating automated red-team security testing in a controlled Windows environment. The literature review, research questions and experimental methodology have been completed; the next phase focuses on CALDERA-based adversary emulation, endpoint telemetry validation and Wazuh detection analysis.",
+      "BSc thesis investigating automated red-team security testing in a controlled Windows environment. The literature review, research questions and experimental methodology have been completed; the next phase focuses on controlled adversary-emulation experiments, endpoint telemetry validation and defensive monitoring analysis.",
     stack: ["MITRE ATT&CK", "MITRE CALDERA", "Windows", "Sysmon", "Wazuh", "PowerShell", "Virtual Machines"],
-    stackLabel: "Planned / evaluated",
+    stackLabel: "Planned stack",
     visual: "pipeline",
-    visualLabels: ["CALDERA", "ENDPOINT", "SYSMON", "WAZUH"],
+    visualLabels: ["CALDERA", "ENDPOINT", "SYSMON", "WAZUH", "ALERT"],
     visualBoundary: "CONTROLLED LAB",
-    visualCaption: "Conceptual architecture",
+    visualFigure: "T-01",
+    visualCaption: "Conceptual — planned",
     links: [],
     specLabels: {
       built: "Completed so far",
@@ -67,9 +70,9 @@ export const projects: Project[] = [
     },
     spec: {
       problem: "Automated adversary-emulation frameworks report whether a step ran, but not whether it actually happened on the endpoint, reached monitoring, or was detected.",
-      built: "Literature review, three research questions, experimental methodology, evidence model, thesis Work Sheet and experimental plan. No lab or experiments yet.",
-      architecture: "Conceptual evidence chain: CALDERA result → Windows endpoint → Sysmon ground truth → Wazuh ingestion → defensive alert.",
-      implementation: "Reviewing and validating suitable CALDERA abilities and MITRE ATT&CK techniques before implementing the controlled lab and running pilot experiments.",
+      built: "Literature review, research questions, experimental methodology, evidence model, research scope and experimental plan. No lab or experiments yet.",
+      architecture: "Conceptual evidence chain, planned — not deployed: CALDERA result → Windows endpoint → Sysmon endpoint evidence → Wazuh ingestion → defensive alert.",
+      implementation: "Reviewing suitable CALDERA abilities and MITRE ATT&CK techniques. Controlled lab implementation and pilot experiments are the next phase.",
       decisions: "Framework-reported outcomes are compared with independent endpoint telemetry before detection is assessed. Controlled, isolated lab only; no live or third-party systems.",
       result: "In progress — research / experimental design. No experiments have been run and no results are available yet.",
     },

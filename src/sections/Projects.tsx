@@ -14,7 +14,7 @@ export function Projects() {
             <span className="line" style={{ ["--i" as string]: 1 }}><span>work</span></span>
           </h2>
           <p className="reveal max-w-xs text-base leading-relaxed text-ash">
-            Security research, cloud tooling and infrastructure work. The thesis is documented in full below.
+            Security research, cloud tooling and infrastructure work. The thesis case study follows below.
           </p>
         </div>
         <div className="mt-12 border-b border-graphite md:mt-16">

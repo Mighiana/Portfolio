@@ -87,7 +87,7 @@ export function ProjectRow({ project, index }: { project: Project; index: number
               kind={project.visual}
               className="relative h-full w-full p-4 opacity-80 transition-opacity duration-700 group-hover:opacity-100"
             />
-            <span className="meta absolute bottom-3 left-3 text-ash">FIG. P—{project.id} / {project.visualCaption ?? "Architecture"}</span>
+            <span className="meta absolute bottom-3 left-3 text-ash">FIG. {project.visualFigure ?? `P—${project.id}`} / {project.visualCaption ?? "Architecture"}</span>
           </div>
         </div>
 
