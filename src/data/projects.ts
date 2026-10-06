@@ -3,6 +3,23 @@ export type ProjectVisual = "pipeline" | "graph" | "cloud" | "network";
 export type ProjectLink = { label: string; href: string };
 
 /** Engineering breakdown shown under each project. Verified facts only. */
+export type ProjectDemo = {
+  label: string;
+  source?: string;
+  note?: string;
+  alt: string;
+  webm: string;
+  mp4: string;
+  poster: string;
+  width: number;
+  height: number;
+};
+
+const media = (name: string) => {
+  const base = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/media/${name}`;
+  return { webm: `${base}.webm`, mp4: `${base}.mp4`, poster: `${base}.webp` };
+};
+
 export type ProjectSpec = {
   problem: string;
   built: string;
@@ -34,6 +51,9 @@ export type Project = {
   visualFigure?: string;
   links: ProjectLink[];
   spec?: ProjectSpec;
+  /** Step through the pipeline stages one at a time (conceptual chains). */
+  visualSequence?: boolean;
+  demos?: ProjectDemo[];
   /** Per-project overrides for spec row headings. */
   specLabels?: Partial<Record<keyof ProjectSpec, string>>;
   /** Internal anchor for the full case study, if any. */
@@ -57,10 +77,11 @@ export const projects: Project[] = [
     stack: ["MITRE ATT&CK", "MITRE CALDERA", "Windows", "Sysmon", "Wazuh", "PowerShell", "Virtual Machines"],
     stackLabel: "Planned stack",
     visual: "pipeline",
-    visualLabels: ["CALDERA", "ENDPOINT", "SYSMON", "WAZUH", "ALERT"],
-    visualBoundary: "CONTROLLED LAB",
+    visualLabels: ["FRAMEWORK", "ENDPOINT", "SYSMON", "WAZUH", "DETECTION"],
+    visualBoundary: "CONTROLLED LAB (PLANNED)",
     visualFigure: "T-01",
-    visualCaption: "Conceptual — planned",
+    visualCaption: "Conceptual / planned architecture — not a lab run",
+    visualSequence: true,
     links: [],
     specLabels: {
       built: "Completed so far",
@@ -116,6 +137,35 @@ export const projects: Project[] = [
     visual: "pipeline",
     visualLabels: ["USER", "AUTH", "S3", "AUDIT"],
     links: [{ label: "Repository", href: "https://github.com/Mighiana/Cloud-Based-Secure-File-Management-System" }],
+    demos: [
+      {
+        label: "Upload → validate → approve",
+        source: "Local Docker",
+        note: "Upload lands in the quarantine bucket, the validator runs basic checks + ClamAV, and only then is the download enabled.",
+        alt: "Screen recording: a PDF is uploaded, shows Validating, then Approved with the Download button enabled.",
+        ...media("cloud-approve"),
+        width: 960,
+        height: 600,
+      },
+      {
+        label: "EICAR test file → quarantined",
+        source: "Local Docker",
+        note: "EICAR is the standard harmless antivirus test string. ClamAV flags it, the file stays quarantined and download is blocked.",
+        alt: "Screen recording: the EICAR test file is uploaded, ClamAV detects it, status Quarantined, download blocked.",
+        ...media("cloud-quarantine"),
+        width: 960,
+        height: 600,
+      },
+      {
+        label: "Admin dashboard → audit log",
+        source: "Local Docker",
+        note: "Pipeline counts and audit events are read from SQL Server. Recorded locally (LocalStack S3, SQL Server, ClamAV); the validation pipeline is a 2026 extension of the 2025 coursework.",
+        alt: "Screen recording: admin security dashboard with the file pipeline, then the audit log listing upload, validation and quarantine events.",
+        ...media("cloud-admin"),
+        width: 960,
+        height: 600,
+      },
+    ],
     spec: {
       problem: "Users need to upload and access files in cloud storage with access limited by role and their activity traceable.",
       built: "ASP.NET Core MVC application with login and registration, file upload and download to AWS S3, and an admin dashboard for users, activity logs and reports.",
@@ -137,6 +187,17 @@ export const projects: Project[] = [
     stack: ["AWS VPC", "EC2", "Security Groups", "NACL", "NAT Gateway", "CloudWatch"],
     visual: "cloud",
     links: [{ label: "Repository", href: "https://github.com/Mighiana/SecureVPC" }],
+    demos: [
+      {
+        label: "Terraform validation",
+        source: "make check · 3× speed",
+        note: "Real repository output: fmt, validate, mocked terraform test, TFLint, Checkov, ShellCheck. Offline checks of the 2026 Terraform reconstruction — not a live AWS deployment.",
+        alt: "Terminal recording of make check in the SecureVPC repository: terraform validate, terraform test, TFLint and Checkov all pass.",
+        ...media("securevpc-check"),
+        width: 960,
+        height: 636,
+      },
+    ],
     spec: {
       problem: "Keep a web server out of the public subnet while still allowing administration and outbound connectivity.",
       built: "Segmented AWS VPC: public subnet with a bastion host, private subnet with the web server.",

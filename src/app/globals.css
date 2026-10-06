@@ -209,6 +209,16 @@ html.has-cursor [role="tab"] {
   to { stroke-dashoffset: -16; }
 }
 
+/* Conceptual chain: one stage lit at a time (5 stages × 1.4s) */
+.seq-step {
+  opacity: 0.08;
+  animation: seq-step 7s steps(1, end) infinite;
+}
+@keyframes seq-step {
+  0% { opacity: 1; }
+  20%, 100% { opacity: 0.08; }
+}
+
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
 
@@ -221,7 +231,7 @@ html.has-cursor [role="tab"] {
     transition-delay: 0ms !important;
     animation-delay: 0ms !important;
   }
-  .packet, .dash-flow, .pulse { animation: none !important; }
+  .packet, .dash-flow, .pulse, .seq-step { animation: none !important; }
   html.js .reveal, html.js .intro { opacity: 1; transform: none; }
   html.js .reveal-lines .line > span, html.js .intro-line > span { transform: none; }
   html.js .reveal-rule { transform: none; }

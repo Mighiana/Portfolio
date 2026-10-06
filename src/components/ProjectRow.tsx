@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import type { Project, ProjectSpec } from "@/data/projects";
 import { cn } from "@/lib/cn";
+import { DemoClip } from "./DemoClip";
 import { ProjectVisual } from "./visuals/ProjectVisual";
 
 const specRows: [keyof ProjectSpec, string][] = [
@@ -84,6 +85,7 @@ export function ProjectRow({ project, index }: { project: Project; index: number
             <ProjectVisual
               labels={project.visualLabels}
               boundary={project.visualBoundary}
+              sequence={project.visualSequence}
               kind={project.visual}
               className="relative h-full w-full p-4 opacity-80 transition-opacity duration-700 group-hover:opacity-100"
             />
@@ -100,6 +102,17 @@ export function ProjectRow({ project, index }: { project: Project; index: number
               </div>
             ))}
           </dl>
+        ) : null}
+
+        {project.demos?.length ? (
+          <div className="lg:col-span-12">
+            <p className="meta mb-3 text-ash">Evidence / recorded from the real project</p>
+            <div className={cn("grid grid-cols-1 gap-4 md:grid-cols-2", project.demos.length >= 3 && "lg:grid-cols-3")}>
+              {project.demos.map((d) => (
+                <DemoClip key={d.webm} demo={d} />
+              ))}
+            </div>
+          </div>
         ) : null}
       </div>
     </article>
