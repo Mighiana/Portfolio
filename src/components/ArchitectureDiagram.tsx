@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { DiagramNodeId } from "@/data/thesis";
 import { cn } from "@/lib/cn";
 
@@ -105,19 +105,24 @@ function Caption({ hover }: { hover: DiagramNodeId | null }) {
   );
 }
 
-const draw = (reduce: boolean | null, delay = 0) =>
-  reduce
-    ? {}
-    : {
-        initial: { pathLength: 0, opacity: 0 },
-        whileInView: { pathLength: 1, opacity: 1 },
-        viewport: { once: true, margin: "-15%" },
-        transition: { duration: 1.1, delay, ease: [0.16, 1, 0.3, 1] as const },
-      };
+// Same initial props on server and client (no hydration mismatch); reduced motion just skips the tween.
+const draw = (reduce: boolean | null, delay = 0) => ({
+  initial: { pathLength: 0, opacity: 0 },
+  whileInView: { pathLength: 1, opacity: 1 },
+  viewport: { once: true, margin: "-15%" },
+  transition: reduce ? { duration: 0 } : { duration: 1.1, delay, ease: [0.16, 1, 0.3, 1] as const },
+});
+
+const useMounted = () => {
+  const [m, setM] = useState(false);
+  useEffect(() => setM(true), []);
+  return m;
+};
 
 /** Desktop: horizontal schematic, left → right. */
 export function ArchitectureDiagramHorizontal({ focus, className }: Props) {
   const reduce = useReducedMotion();
+  const mounted = useMounted();
   const { hover, lit, pathLit, bind } = useDiagramState(focus);
   const W = 1000;
   const boxW = 152;
@@ -172,7 +177,7 @@ export function ArchitectureDiagramHorizontal({ focus, className }: Props) {
           </g>
         ))}
 
-        {!reduce ? (
+        {mounted && !reduce ? (
           <rect width="6" height="6" x="-3" y="-3" fill="#fff">
             <animateMotion dur="7s" repeatCount="indefinite" path={flow} />
           </rect>
@@ -186,6 +191,7 @@ export function ArchitectureDiagramHorizontal({ focus, className }: Props) {
 /** Mobile: vertical schematic, top → bottom, simplified sub-modules. */
 export function ArchitectureDiagramVertical({ focus, className }: Props) {
   const reduce = useReducedMotion();
+  const mounted = useMounted();
   const { hover, lit, pathLit, bind } = useDiagramState(focus);
   const W = 340;
   const rowH = 132;
@@ -219,7 +225,7 @@ export function ArchitectureDiagramVertical({ focus, className }: Props) {
             ) : null}
           </g>
         ))}
-        {!reduce ? (
+        {mounted && !reduce ? (
           <rect width="6" height="6" x="-3" y="-3" fill="#fff">
             <animateMotion dur="7s" repeatCount="indefinite" path={`M 36 ${y(0) + boxH} L 36 ${y(4)}`} />
           </rect>
