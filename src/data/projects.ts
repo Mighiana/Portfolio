@@ -127,6 +127,32 @@ export const projects: Project[] = [
   },
   {
     id: "03",
+    title: "SafePaste",
+    type: "Privacy Engineering / AppSec",
+    year: "2026",
+    status: "Live demo",
+    summary:
+      "Local privacy firewall for technical logs. Finds secrets, tokens, keys and personal data in pasted logs with 27 deterministic rules, explains every finding and lets the user approve the sanitized output. The log never leaves the device.",
+    stack: ["JavaScript", "HTML / CSS", "Web Workers", "Node.js CLI", "Content Security Policy", "GitHub Actions"],
+    visual: "pipeline",
+    visualLabels: ["LOG", "DETECT", "REVIEW", "OUTPUT"],
+    visualBoundary: "ON DEVICE · NO NETWORK",
+    links: [
+      { label: "Repository", href: "https://github.com/Mighiana/SafePaste" },
+      { label: "Live demo", href: "https://mighiana.github.io/SafePaste/" },
+    ],
+    spec: {
+      problem: "Engineers paste logs into AI assistants, tickets and support chats. Those logs often contain passwords, tokens, cloud keys, emails and IPs; manual redaction misses things, and cloud scanners need the same data uploaded.",
+      built: "Browser app and CLI on one dependency-free engine: format detection, bounded parsers (JSON, env, HTTP headers, logfmt), 27 detectors, privacy profiles, per-finding Keep / Hide review, in-memory pseudonymization and a metadata-only privacy report.",
+      architecture: "Static page → Web Worker → shared engine (src/sanitizer.js); the CLI runs the same engine. No backend, database, storage or network calls.",
+      implementation: "Bounded lexers and validators instead of large regexes (IPv6, MAC, PEM, JWT, Basic auth), overlap resolution, fail-closed size limits, CLI --check exit codes for CI gates.",
+      decisions: "Deterministic, explainable rules; no ML or remote APIs. Zero egress enforced by CSP (connect-src 'none'), static privacy checks and a pre-commit gate. Credentials are always redacted.",
+      result: "Live as a static GitHub Pages demo that runs fully in the browser. 26 test suites pass in CI, incl. 144/144 synthetic corpus cases and a 46-case red-team suite with 10 recorded known misses. Academic Human-Centered AI project, extended October 2026.",
+    },
+    published: true,
+  },
+  {
+    id: "04",
     title: "Cloud-Based Secure File Management System",
     type: "Cloud / Application Security",
     year: "2025",
@@ -177,7 +203,7 @@ export const projects: Project[] = [
     published: true,
   },
   {
-    id: "04",
+    id: "05",
     title: "SecureVPC",
     type: "Cloud Networking / AWS",
     year: "2025",
