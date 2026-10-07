@@ -113,7 +113,7 @@ export const projects: Project[] = [
     visual: "graph",
     links: [
       { label: "Repository", href: "https://github.com/Mighiana/BlastRadius" },
-      { label: "Live demo", href: "https://blastradius.streamlit.app/" },
+      { label: "Live app", href: "https://blastradius-hulf.onrender.com/" },
     ],
     spec: {
       problem: "A Terraform diff shows what changed, not what became reachable. A small change can open a new path to a sensitive resource.",
@@ -121,7 +121,7 @@ export const projects: Project[] = [
       architecture: "React / TypeScript (Vite) → FastAPI → SQLAlchemy with PostgreSQL (SQLite locally). Bounded background jobs run the Python engine in isolation.",
       implementation: "Resource graph builder, IAM policy normalization, attack-path search, coverage diagnostics, JSON / Markdown / SARIF export, CLI and GitHub Actions gating.",
       decisions: "Fail closed: engine errors, timeouts or incomplete coverage return REVIEW. No Terraform execution, provider calls or AWS credentials are needed.",
-      result: "Private beta with a public Streamlit demo. Verdicts: BLOCK / REVIEW / SAFE.",
+      result: "Private beta, hosted on Render. Verdicts: BLOCK / REVIEW / SAFE.",
     },
     published: true,
   },
