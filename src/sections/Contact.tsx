@@ -24,7 +24,7 @@ export function Contact() {
           Open to cybersecurity, cloud security, infrastructure security and security-research traineeships / graduate roles.
         </p>
         <p className="meta reveal mt-4 text-white" style={{ ["--d" as string]: "350ms" }}>
-          Available from {profile.availability} · part-time earlier
+          Available from {profile.availability} (full-time) · part-time now
         </p>
 
         <div className="reveal mt-12 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4" style={{ ["--d" as string]: "400ms" }}>

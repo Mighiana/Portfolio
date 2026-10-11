@@ -5,7 +5,7 @@ export function Currently() {
   const focus = [
     { title: "Researching", text: "Red-team automation thesis — experimental design stage.", href: projectUrl("red-team-research"), cta: "View research" },
     { title: "Building", text: "Cloud, network and Windows identity security projects.", href: "#projects", cta: "View projects" },
-    { title: "Seeking", text: "Cybersecurity, cloud security, infrastructure security and security-research traineeships / graduate roles — available from March 2027.", href: "#contact", cta: "Contact" },
+    { title: "Seeking", text: "Cybersecurity, cloud security, infrastructure security and security-research traineeships / graduate roles — full-time from March 2027, part-time now.", href: "#contact", cta: "Contact" },
   ];
   return (
     <section id="currently" data-nav="about" data-theme="light" aria-labelledby="currently-title" className="bg-paper pb-16 text-black md:pb-20">

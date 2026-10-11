@@ -75,7 +75,6 @@ export function MobileMenu({ open, active, homeHref, onClose }: Props) {
                       aria-current={active === item.id ? "location" : undefined}
                       className="group flex min-h-16 items-baseline gap-5 py-3"
                     >
-                      <span className="meta w-6 text-ash tabular-nums">{item.index}</span>
                       <span
                         className={cn(
                           "text-[clamp(2.25rem,11vw,3.5rem)] font-semibold uppercase leading-none tracking-[-0.04em] transition-colors",

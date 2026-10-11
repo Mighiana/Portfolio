@@ -11,7 +11,7 @@ export default function OpengraphImage() {
     (
       <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", background: "#090909", color: "#fff", padding: 64, fontFamily: "sans-serif" }}>
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 20, letterSpacing: 4, color: "#9a9a9a" }}>
-          <span>{profile.positioning}</span>
+          <span>{profile.status} · {profile.university}</span>
           <span>{profile.locationShort}</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
