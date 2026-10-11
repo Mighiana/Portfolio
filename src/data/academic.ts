@@ -35,7 +35,7 @@ export const training: AcademicRecord[] = [
   {
     title: "AWS Cloud Foundations", institution: "Amazon Web Services",
     metadata: ["AWS", "Cloud", "Security", "Architecture", "Training — not AWS Certification"],
-    description: "AWS Cloud Practitioner Essentials and AWS Cloud Quest: Cloud Practitioner. Cloud Quest completed August 2025; no issue date is stated for Essentials.",
+    description: "AWS Cloud Practitioner Essentials and AWS Cloud Quest: Cloud Practitioner (August 2025).",
     credentials: [{ title: "AWS Cloud Practitioner Essentials" }, { title: "AWS Cloud Quest: Cloud Practitioner" }],
   },
   {

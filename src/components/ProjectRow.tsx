@@ -4,7 +4,7 @@ import { ProofChain } from "./ProofChain";
 
 export function ProjectRow({ project, index }: { project: Project; index: number }) {
   return (
-    <article className="reveal border-t border-graphite py-8 md:py-10" style={{ ["--d" as string]: `${index * 40}ms` }}>
+    <article id={project.slug === "red-team-research" ? "thesis" : undefined} className="reveal border-t border-graphite py-8 md:py-10" style={{ ["--d" as string]: `${index * 40}ms` }}>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-x-12">
         <div>
           <p className="meta flex gap-4 text-ash"><span className="shrink-0 text-white">P—{project.id}</span><span>{project.type}</span></p>
