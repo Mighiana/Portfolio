@@ -38,10 +38,6 @@ export const training: AcademicRecord[] = [
     description: "AWS Cloud Practitioner Essentials and AWS Cloud Quest: Cloud Practitioner. Cloud Quest date: August 2025.",
     credentials: [{ title: "AWS Cloud Practitioner Essentials" }, { title: "AWS Cloud Quest: Cloud Practitioner" }],
   },
-  {
-    title: "McKinsey.org Forward Program", institution: "McKinsey & Company", date: "Issued April 2024",
-    metadata: ["Professional development", "Structured problem solving", "Communication", "Adaptability", "Resilience", "Digital ways of working"],
-    description: "Professional-development training supporting collaboration and structured work; not a cybersecurity certification.",
-    credentials: [{ title: "McKinsey.org Forward Program" }],
-  },
 ];
+
+export const professionalDevelopment = "McKinsey.org Forward Program (McKinsey & Company, April 2024) — structured problem solving and communication; not a cybersecurity credential.";

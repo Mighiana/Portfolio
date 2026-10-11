@@ -33,8 +33,8 @@ export function Journey() {
                       <span aria-hidden className={cn("absolute left-0 top-8 size-[11px] border border-black lg:-left-[5.5px]", primary ? "bg-black" : "bg-paper")} />
                       <div className="grid grid-cols-1 gap-3 md:grid-cols-12 md:gap-6">
                         <p className="meta text-muted-light md:col-span-3">
-                          {e.period ?? "—"}
-                          {e.status ? <span className="mt-1 block text-black/70">{e.status}</span> : null}
+                          {e.period}
+                          {e.status ? <span className={cn("block text-black/80", e.period && "mt-1")}>{e.status}</span> : null}
                         </p>
                         <div className="md:col-span-9">
                           <h3 className={cn("font-semibold uppercase tracking-[-0.02em]", primary ? "text-[clamp(1.25rem,2.4vw,1.9rem)] leading-tight" : "text-lg leading-snug text-black/80")}>
@@ -44,7 +44,7 @@ export function Journey() {
                             </Title>
                           </h3>
                           {e.org ? <p className="meta mt-2 text-muted-light">{e.org}</p> : null}
-                          <p className={cn("mt-3 max-w-2xl leading-relaxed text-graphite", primary ? "text-base md:text-[17px]" : "text-[15px]")}>{e.description}</p>
+                          {e.description ? <p className={cn("mt-3 max-w-2xl leading-relaxed text-graphite", primary ? "text-base md:text-[17px]" : "text-[15px]")}>{e.description}</p> : null}
                         </div>
                       </div>
                     </li>

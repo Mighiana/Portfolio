@@ -1,6 +1,6 @@
 import { Boxes, Cloud, Network, Server, Workflow } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
-import { skillGroups, type SkillGroup } from "@/data/skills";
+import { evidenceLabels, skillGroups, type SkillGroup } from "@/data/skills";
 
 const icons: Record<SkillGroup["icon"], typeof Cloud> = { automation: Workflow, cloud: Cloud, network: Network, systems: Server, tools: Boxes };
 
@@ -16,7 +16,7 @@ export function Skills() {
             <span className="line" style={{ ["--i" as string]: 1 }}><span>inventory</span></span>
           </h2>
           <p className="reveal max-w-xs text-base leading-relaxed text-fog">
-            Tools and concepts used in projects, labs and coursework. Planned thesis tooling is not counted here.
+            Grouped by evidence: used in linked projects, or studied in coursework / labs. Planned thesis tooling is not counted.
           </p>
         </div>
 
@@ -40,7 +40,7 @@ export function Skills() {
                         <span className="meta w-5 text-ash/70 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
                         <span className="text-[15px] text-fog">{s.name}</span>
                       </span>
-                      {s.level ? <span className="meta border border-graphite px-1.5 py-0.5 text-[10px] text-ash">Basic</span> : null}
+                      <span className={`meta shrink-0 border px-1.5 py-0.5 text-[10px] ${s.evidence === "project" ? "border-graphite text-fog" : "border-dashed border-ash text-ash"}`}>{evidenceLabels[s.evidence]}</span>
                     </li>
                   ))}
                 </ul>

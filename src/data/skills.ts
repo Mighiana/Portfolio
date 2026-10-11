@@ -1,20 +1,26 @@
-export type SkillItem = { name: string; level?: "basic" };
+export type Evidence = "project" | "coursework";
+export type SkillItem = { name: string; evidence: Evidence };
 export type SkillGroup = {
   code: string; title: string; subtitle: string;
   icon: "automation" | "cloud" | "network" | "systems" | "tools"; items: SkillItem[];
 };
 
+export const evidenceLabels: Record<Evidence, string> = { project: "Projects", coursework: "Coursework / labs" };
+
+const used = (...names: string[]) => names.map((name): SkillItem => ({ name, evidence: "project" }));
+const studied = (...names: string[]) => names.map((name): SkillItem => ({ name, evidence: "coursework" }));
+
 export const skillGroups: SkillGroup[] = [
   { code: "SEC", title: "Security", subtitle: "Identity / controls", icon: "tools",
-    items: ["IAM", "RBAC", "PKI / TLS", "Active Directory", "Security hardening", "Audit logging"].map((name) => ({ name })) },
+    items: used("IAM / least privilege", "RBAC", "PKI / TLS", "Security hardening", "Audit logging") },
   { code: "CLD", title: "Cloud", subtitle: "AWS / infrastructure", icon: "cloud",
-    items: ["AWS", "S3", "EC2", "VPC", "CloudWatch", "CloudTrail", "Terraform"].map((name) => ({ name })) },
-  { code: "NET", title: "Network", subtitle: "Projects / coursework", icon: "network",
-    items: ["Routing", "Switching", "VLAN", "NAT / ACL", "Security groups", "NACLs"].map((name) => ({ name })) },
-  { code: "SYS", title: "Systems", subtitle: "Lab environments", icon: "systems",
-    items: ["Linux", "Windows Server", "AD DS", "AD CS", "IIS"].map((name) => ({ name })) },
+    items: used("AWS (S3, EC2, VPC)", "CloudWatch / Flow Logs", "Terraform") },
+  { code: "NET", title: "Network", subtitle: "Segmentation / routing", icon: "network",
+    items: [...used("Subnet segmentation & NAT", "Security groups / NACLs"), ...studied("Routing & switching", "VLANs")] },
+  { code: "SYS", title: "Systems", subtitle: "Servers / identity", icon: "systems",
+    items: used("Linux", "Windows Server", "Active Directory (AD DS / AD CS)", "IIS") },
   { code: "ENG", title: "Engineering", subtitle: "Languages / tooling", icon: "automation",
-    items: ["Python", "C#", "PowerShell", "Bash", "SQL", "JavaScript", "Git"].map((name) => ({ name })) },
+    items: used("Python", "C# / ASP.NET Core", "PowerShell", "Bash", "SQL", "JavaScript", "Git") },
   { code: "PLT", title: "Platform", subtitle: "DevSecOps / validation", icon: "tools",
-    items: ["Docker", "GitHub Actions", "TFLint", "Checkov", "ShellCheck", "LocalStack"].map((name) => ({ name })) },
+    items: used("Docker", "GitHub Actions", "TFLint / Checkov", "ShellCheck", "LocalStack") },
 ];

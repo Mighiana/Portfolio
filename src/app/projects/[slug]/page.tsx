@@ -68,6 +68,25 @@ export default async function CaseStudy({ params }: Props) {
                   </div>
                 ))}
               </dl>
+              {p.outputs?.length ? (
+                <div className="mt-10">
+                  <h2 className="meta text-white">Real analysis output</h2>
+                  <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-2">
+                    {p.outputs.map((o) => (
+                      <figure key={o.src} className="border border-graphite">
+                        <a href={o.src} target="_blank" rel="noopener noreferrer" aria-label={`Open full size: ${o.label}`} data-cursor="open" className="block">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={o.src} alt={o.alt} width={o.width} height={o.height} loading="lazy" decoding="async" className="h-auto w-full" />
+                        </a>
+                        <figcaption className="border-t border-graphite p-4">
+                          <p className="meta text-white">{o.label}</p>
+                          <p className="mt-2 text-sm leading-relaxed text-fog">{o.caption}</p>
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
               {p.visual === "graph" || p.visual === "cloud" ? (
                 <figure className="mt-10 max-w-3xl">
                   <div className="aspect-[43/24] border border-graphite">
