@@ -157,7 +157,7 @@ export const projects: Project[] = [
       { label: "View repository", href: "https://github.com/Mighiana/SafePaste" },
       { label: "Live demo", href: "https://mighiana.github.io/SafePaste/" },
     ],
-    evidence: [{ label: "Privacy boundaries & limitations", href: "https://github.com/Mighiana/SafePaste#privacy-boundaries" }],
+    evidence: [{ label: "Privacy threat model", href: "https://github.com/Mighiana/SafePaste#privacy-threat-model" }],
     spec: {
       problem: "Technical logs can expose credentials and personal data when shared with AI assistants, support or issue trackers.",
       built: "A local privacy firewall: deterministic detection, per-finding human review, sanitized output and metadata-only privacy reports. Originated in Human-Centered AI software engineering coursework.",
