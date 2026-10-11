@@ -11,7 +11,7 @@ export const profile = {
   positioning: "Security / Cloud / Infrastructure",
   discipline: "Computer Science & Engineering",
   statement:
-    "Building secure systems, cloud infrastructure and automation-driven security solutions.",
+    "Building secure systems, cloud infrastructure and security automation.",
 
   degree: "BSc Computer Science and Engineering",
   university: "Óbuda University",

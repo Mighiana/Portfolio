@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { navItems } from "@/data/nav";
 import { profile } from "@/data/profile";
 import { useSectionState } from "@/hooks/useSectionState";
@@ -8,6 +9,7 @@ import { cn } from "@/lib/cn";
 import { MobileMenu } from "./MobileMenu";
 
 export function Navbar() {
+  const homeHref = usePathname()?.includes("/projects/") ? `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/` : "";
   const { active, theme, scrolled } = useSectionState(64);
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -35,7 +37,7 @@ export function Navbar() {
         )}
       >
         <nav aria-label="Primary" className="shell flex h-16 items-center justify-between gap-6">
-          <a href="#home" aria-label={`${profile.name} — home`} className="group flex min-h-11 items-center gap-3">
+          <a href={`${homeHref}#home`} aria-label={`${profile.name} — home`} className="group flex min-h-11 items-center gap-3">
             <span
               className={cn(
                 "grid size-8 place-items-center border text-[13px] font-semibold tracking-[-0.04em] transition-colors",
@@ -53,7 +55,7 @@ export function Navbar() {
               return (
                 <li key={item.id}>
                   <a
-                    href={`#${item.id}`}
+                    href={`${homeHref}#${item.id}`}
                     aria-current={isActive ? "location" : undefined}
                     className={cn(
                       "meta group relative flex min-h-11 items-center gap-2 px-3 transition-colors",
@@ -108,7 +110,7 @@ export function Navbar() {
           </div>
         </nav>
       </header>
-      <MobileMenu open={open} active={active} onClose={() => { setOpen(false); triggerRef.current?.focus(); }} />
+      <MobileMenu homeHref={homeHref} open={open} active={active} onClose={() => { setOpen(false); triggerRef.current?.focus(); }} />
     </>
   );
 }

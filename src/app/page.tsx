@@ -9,7 +9,8 @@ import { Hero } from "@/sections/Hero";
 import { Journey } from "@/sections/Journey";
 import { Projects } from "@/sections/Projects";
 import { Skills } from "@/sections/Skills";
-import { ThesisCaseStudy } from "@/sections/ThesisCaseStudy";
+import { Currently } from "@/sections/Currently";
+import { Certifications, InternationalPrograms } from "@/sections/AcademicPrograms";
 
 export default function Home() {
   return (
@@ -20,10 +21,12 @@ export default function Home() {
       <main id="main">
         <Hero />
         <About />
+        <Currently />
         <Projects />
-        <ThesisCaseStudy />
         <Journey />
+        <InternationalPrograms />
         <Education />
+        <Certifications />
         <Skills />
         <Contact />
       </main>

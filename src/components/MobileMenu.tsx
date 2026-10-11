@@ -7,9 +7,9 @@ import { profile } from "@/data/profile";
 import { cn } from "@/lib/cn";
 import { CVButton } from "./CVButton";
 
-type Props = { open: boolean; active: string; onClose: () => void };
+type Props = { open: boolean; active: string; homeHref: string; onClose: () => void };
 
-export function MobileMenu({ open, active, onClose }: Props) {
+export function MobileMenu({ open, active, homeHref, onClose }: Props) {
   const reduce = useReducedMotion();
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -70,7 +70,7 @@ export function MobileMenu({ open, active, onClose }: Props) {
                     className="border-b border-graphite"
                   >
                     <a
-                      href={`#${item.id}`}
+                      href={`${homeHref}#${item.id}`}
                       onClick={onClose}
                       aria-current={active === item.id ? "location" : undefined}
                       className="group flex min-h-16 items-baseline gap-5 py-3"

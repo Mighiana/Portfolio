@@ -26,8 +26,7 @@ export function About() {
             </h2>
             <p className="reveal mt-12 max-w-xl text-lg leading-relaxed text-graphite md:text-xl" style={{ ["--d" as string]: "200ms" }}>
               I am {profile.name}, a final-semester {profile.degree} student at {profile.university}. My technical interests
-              include cybersecurity, cloud infrastructure, networking, Linux and automation, with a focus on building practical
-              technical projects and developing deeper expertise in secure systems.
+              include cloud and network security, infrastructure hardening, PKI / identity, privacy engineering and security automation.
             </p>
           </div>
 

@@ -85,7 +85,7 @@ export function ThesisCaseStudy() {
     <section id="thesis" data-nav="projects" data-theme="dark" aria-labelledby="thesis-title" className="relative bg-void text-white">
       {/* Chapter opener: research problem leads, official title stays visible */}
       <div className="shell flex flex-col pb-10 pt-16 md:pt-24">
-        <SectionHeader index="03.1" label="Flagship case study" aside="Thesis / 2026–2027" />
+        <SectionHeader index="P—04" label="Research case study" aside="Thesis / 2026–2027" />
         <div className="flex flex-col py-8 md:py-12">
           <p className="reveal meta flex items-center gap-3 text-fog">
             <span aria-hidden className="size-1.5 bg-white" /> {thesis.label}
@@ -100,9 +100,9 @@ export function ThesisCaseStudy() {
           <p className="reveal mt-6 max-w-2xl text-base leading-relaxed text-fog md:text-lg">{thesis.subtitle}</p>
           <div className="reveal mt-8 border-t border-graphite pt-5 md:mt-10">
             <p className="meta text-ash">Official title</p>
-            <h2 id="thesis-title" className="mt-2 max-w-3xl text-[clamp(1.15rem,2vw,1.6rem)] font-semibold uppercase leading-tight tracking-[-0.02em] text-white">
+            <h1 id="thesis-title" className="mt-2 max-w-3xl text-[clamp(1.15rem,2vw,1.6rem)] font-semibold uppercase leading-tight tracking-[-0.02em] text-white">
               {thesis.title}
-            </h2>
+            </h1>
           </div>
         </div>
         <dl className="reveal grid grid-cols-2 border-l border-t border-graphite md:grid-cols-4">

@@ -14,7 +14,7 @@ export function Contact() {
         <LazyNodeSphere className="h-full w-full" />
       </div>
       <div className="shell">
-        <SectionHeader index="06" label="Contact" aside={profile.locationShort} />
+        <SectionHeader index="10" label="Contact" aside={profile.locationShort} />
         <h2 id="contact-title" className="display reveal-lines mt-12 text-[clamp(2.6rem,8.5vw,8rem)] md:mt-16">
           <span className="line"><span>Let&apos;s build</span></span>
           <span className="line text-ash" style={{ ["--i" as string]: 1 }}><span>secure</span></span>
