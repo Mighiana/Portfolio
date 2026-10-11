@@ -14,8 +14,9 @@ export type Project = {
   stack: string[]; stackLabel?: string; visual: ProjectVisual;
   visualLabels?: string[]; visualBoundary?: string; visualCaption?: string;
   visualSequence?: boolean; links: ProjectLink[]; evidence?: ProjectLink[];
-  spec: ProjectSpec; demos?: ProjectDemo[]; published: boolean;
+  spec: ProjectSpec; demos?: ProjectDemo[]; outputs?: ProjectOutput[]; tier: "featured" | "other"; published: boolean;
 };
+export type ProjectOutput = { label: string; caption: string; alt: string; src: string; width: number; height: number };
 
 export const projectUrl = (slug: string) =>
   `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/projects/${slug}/`;
@@ -38,15 +39,23 @@ export const projects: Project[] = [
       { label: "Live app", href: "https://blastradius-hulf.onrender.com/" },
     ],
     evidence: [{ label: "Model limits & readiness", href: "https://github.com/Mighiana/BlastRadius/blob/main/docs/readiness.md" }],
+    outputs: [
+      { label: "BLOCK CHANGE — real CLI result", caption: "Captured output for the bundled examples/safe → examples/vulnerable pair (one changed line: SSH ingress CIDR). Exit code 1. Bundled example, not a customer environment.",
+        alt: "BlastRadius CLI output: Decision BLOCK CHANGE, verdict SECURITY REGRESSION, score 100 to 20, and the new path Internet to Web SG to Web Server to App Role to Customer Data.",
+        src: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/media/blastradius-block.webp`, width: 1122, height: 707 },
+      { label: "SARIF 2.1.0 export — excerpt", caption: "First result from --format sarif on the bundled plan JSON example; codeFlows, fingerprints and edge evidence omitted for length. Logical resource addresses, not guessed line numbers.",
+        alt: "BlastRadius SARIF result BR001, level error, CRITICAL attack path from INTERNET to sensitive_data.customer_data with logical location aws_security_group.web.",
+        src: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/media/blastradius-sarif.webp`, width: 1122, height: 932 },
+    ],
     spec: {
       problem: "A Terraform diff shows what changed, not what became reachable. A small change can open a new path to a sensitive resource.",
-      built: "A bounded analyzer for before/after HCL snapshots or saved plan JSON, with path evidence, coverage diagnostics and security verdicts.",
+      built: "A Terraform security-analysis tool that compares infrastructure changes and identifies newly introduced attack and reachability paths to sensitive AWS resources. It models supported cloud relationships as an infrastructure graph and produces explainable SAFE TO MERGE, REVIEW REQUIRED and BLOCK CHANGE decisions with supporting evidence, plus JSON, Markdown and SARIF reports for command-line, CI and pull-request security review workflows.",
       architecture: "React / TypeScript → FastAPI → SQLAlchemy with PostgreSQL (SQLite locally). Isolated background jobs run the Python analysis engine.",
       implementation: "Infrastructure graph construction, IAM normalization, attack-path search, findings, remediation guidance and JSON / Markdown / SARIF exports; CLI and GitHub PR checks.",
       decisions: "No Terraform execution, provider calls or AWS credentials. Analysis errors and incomplete coverage lead to REVIEW; strict CLI gating requires --fail-on-review.",
       result: "Private beta on Render, not a complete AWS security assessment. Only supported relationships are modeled; dynamic/runtime behavior and unsupported coverage remain limitations.",
     },
-    published: true,
+    tier: "featured", published: true,
   },
   {
     id: "02", slug: "secure-cloud-files", title: "Secure Cloud File Management Platform",
@@ -80,7 +89,7 @@ export const projects: Project[] = [
         alt: "Real local recording: admin dashboard and audit log with upload and validation events.",
         ...media("cloud-admin"), width: 960, height: 600 },
     ],
-    published: true,
+    tier: "featured", published: true,
   },
   {
     id: "03", slug: "securevpc", title: "SecureVPC",
@@ -104,10 +113,29 @@ export const projects: Project[] = [
       note: "Historical 2026 recording of real offline checks — not live AWS deployment or current test-count evidence.",
       alt: "Real terminal recording: Terraform validation, mocked tests, TFLint, Checkov and ShellCheck.",
       ...media("securevpc-check"), width: 960, height: 636 }],
-    published: true,
+    tier: "featured", published: true,
   },
   {
-    id: "04", slug: "red-team-research", title: "Automation of Red Team Security in Controlled Environments",
+    id: "04", slug: "windows-pki", title: "Windows Enterprise PKI & Certificate Trust Lab",
+    type: "Windows security / Identity / PKI", year: "May 2026 → 2026 extension", status: "Original lab completed · Live rebuild documented",
+    summary: "AD-integrated Windows Server 2022 PKI with an Enterprise Root CA, GPO trust distribution, machine certificates and trusted IIS HTTPS.",
+    proof: ["Enterprise Root CA", "GPO trust", "Machine certificate", "IIS :443", "Trusted browser"],
+    stack: ["Windows Server 2022", "AD DS / AD CS", "IIS", "PowerShell", "Pester", "PSScriptAnalyzer"],
+    visual: "pipeline", visualLabels: ["ROOT CA", "GPO", "CERT", "TLS TRUST"], visualBoundary: "LAB TRUST",
+    links: [{ label: "View repository", href: "https://github.com/Mighiana/Windows-enterprise-pk" }],
+    evidence: [{ label: "Recorded two-VM rebuild evidence", href: "https://github.com/Mighiana/Windows-enterprise-pk/blob/main/docs/live-lab.md" }],
+    spec: {
+      problem: "An HTTPS binding is not enough: issuer trust, certificate identity, enrollment permissions and revocation must be checked independently.",
+      built: "Manual university lab completed May 2026: AD DS, AD CS Enterprise Root CA, GPO-based root trust, machine certificate issuance and IIS HTTPS. The repository was created later for documentation and reproducibility.",
+      architecture: "Original single-VM lab; a separate 2026 extension documents a Windows Server 2022 server and a Windows 11 domain client on a host-only network.",
+      implementation: "Read-only PowerShell PKI verification and AD CS misconfiguration auditing, Pester/PSScriptAnalyzer and CI. The documented live rebuild tested separate-client GPO delivery, hardened auto-enrollment, revocation and detection/remediation of AD CS misconfigurations.",
+      decisions: "Keep original lab, live rebuild, fixture-based sample reports and production target design distinct. Audit findings indicate review, not proof of exploitation.",
+      result: "Lab evidence, not production PKI. The live rebuild remains an online root CA. The offline-root / issuing-CA production target is design-only and unimplemented; fixture sample reports are not live evidence.",
+    },
+    tier: "featured", published: true,
+  },
+  {
+    id: "05", slug: "red-team-research", title: "Automation of Red Team Security in Controlled Environments",
     type: "Security research / Adversary emulation", year: "2026–2027", status: "In progress · Research / experimental design",
     summary: "Research into whether automated adversary-emulation results correspond with independent endpoint evidence and defensive detection.",
     proof: ["Framework result", "Windows endpoint", "Sysmon evidence", "Wazuh ingestion", "Defensive detection"],
@@ -124,26 +152,7 @@ export const projects: Project[] = [
       decisions: "Isolated, authorized academic work; sanitized public overview only. No private research questions, detailed procedures, scripts or unpublished results.",
       result: "BSc thesis, Óbuda University, 2026–2027. Supervisor: Rigó Ernő. Research / experimental design; not deployed.",
     },
-    published: true,
-  },
-  {
-    id: "05", slug: "windows-pki", title: "Windows Enterprise PKI & Certificate Trust Lab",
-    type: "Windows security / Identity / PKI", year: "May 2026 → 2026 extension", status: "Original lab completed · Live rebuild documented",
-    summary: "AD-integrated Windows Server 2022 PKI with an Enterprise Root CA, GPO trust distribution, machine certificates and trusted IIS HTTPS.",
-    proof: ["Enterprise Root CA", "GPO trust", "Machine certificate", "IIS :443", "Trusted browser"],
-    stack: ["Windows Server 2022", "AD DS / AD CS", "IIS", "PowerShell", "Pester", "PSScriptAnalyzer"],
-    visual: "pipeline", visualLabels: ["ROOT CA", "GPO", "CERT", "TLS TRUST"], visualBoundary: "LAB TRUST",
-    links: [{ label: "View repository", href: "https://github.com/Mighiana/Windows-enterprise-pk" }],
-    evidence: [{ label: "Recorded two-VM rebuild evidence", href: "https://github.com/Mighiana/Windows-enterprise-pk/blob/main/docs/live-lab.md" }],
-    spec: {
-      problem: "An HTTPS binding is not enough: issuer trust, certificate identity, enrollment permissions and revocation must be checked independently.",
-      built: "Manual university lab completed May 2026: AD DS, AD CS Enterprise Root CA, GPO-based root trust, machine certificate issuance and IIS HTTPS. The repository was created later for documentation and reproducibility.",
-      architecture: "Original single-VM lab; a separate 2026 extension documents a Windows Server 2022 server and a Windows 11 domain client on a host-only network.",
-      implementation: "Read-only PowerShell PKI verification and AD CS misconfiguration auditing, Pester/PSScriptAnalyzer and CI. The documented live rebuild tested separate-client GPO delivery, hardened auto-enrollment, revocation and detection/remediation of AD CS misconfigurations.",
-      decisions: "Keep original lab, live rebuild, fixture-based sample reports and production target design distinct. Audit findings indicate review, not proof of exploitation.",
-      result: "Lab evidence, not production PKI. The live rebuild remains an online root CA. The offline-root / issuing-CA production target is design-only and unimplemented; fixture sample reports are not live evidence.",
-    },
-    published: true,
+    tier: "featured", published: true,
   },
   {
     id: "06", slug: "safepaste", title: "SafePaste",
@@ -166,7 +175,7 @@ export const projects: Project[] = [
       decisions: "Local only, no remote model or judge. CSP blocks network egress; logs remain in memory. Human review is mandatory because deterministic detection is best-effort and unknown formats can be missed.",
       result: "Hosted static demo processes logs on the device. The host still sees the initial page request, and clipboard/export actions deliberately leave the in-memory boundary. No claim that sanitized output is guaranteed safe.",
     },
-    published: true,
+    tier: "other", published: true,
   },
   {
     id: "07", slug: "splitsmart", title: "SplitSmart",
@@ -186,6 +195,6 @@ export const projects: Project[] = [
       decisions: "Subscriptions and scheduled notifications stay local; reminders and other supported data sync for signed-in users. Local storage remains primary and Firestore rules enforce cloud access.",
       result: "Android beta on Google Play internal testing, not publicly released. Cloud Functions/Storage are not deployed and iOS is not configured. No claim of a public production demo.",
     },
-    published: true,
+    tier: "other", published: true,
   },
 ];

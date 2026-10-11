@@ -21,7 +21,10 @@ export function Contact() {
           <span className="line" style={{ ["--i" as string]: 2 }}><span>systems.</span></span>
         </h2>
         <p className="reveal mt-10 max-w-lg text-lg leading-relaxed text-fog" style={{ ["--d" as string]: "300ms" }}>
-          Open to opportunities and conversations in cybersecurity, cloud infrastructure, DevOps and related engineering roles.
+          Open to cybersecurity, cloud security, infrastructure security and security-research traineeships / graduate roles.
+        </p>
+        <p className="meta reveal mt-4 text-white" style={{ ["--d" as string]: "350ms" }}>
+          Part-time: available now · Full-time: from March 2027
         </p>
 
         <div className="reveal mt-12 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4" style={{ ["--d" as string]: "400ms" }}>

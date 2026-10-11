@@ -1,5 +1,5 @@
 import { SectionHeader } from "@/components/SectionHeader";
-import { programs, training, type AcademicRecord } from "@/data/academic";
+import { professionalDevelopment, programs, training, type AcademicRecord } from "@/data/academic";
 
 function Record({ record, secondary = false }: { record: AcademicRecord; secondary?: boolean }) {
   const links = record.credentials.filter((c) => c.href);
@@ -46,7 +46,8 @@ export function Certifications() {
       <div className="shell">
         <SectionHeader index="08" label="Supporting credentials" tone="light" />
         <h2 id="training-title" className="mt-6 max-w-3xl text-[clamp(1.75rem,3.5vw,3rem)] font-semibold uppercase leading-tight tracking-[-0.03em]">Selected Certifications &amp; Training</h2>
-        <div className="mt-8 border-b border-line-light">{training.map((t, i) => <Record key={t.title} record={t} secondary={i === 2} />)}</div>
+        <div className="mt-8 border-b border-line-light">{training.map((t) => <Record key={t.title} record={t} />)}</div>
+        <p className="mt-5 max-w-3xl text-sm leading-relaxed text-muted-light"><span className="meta mr-2 text-black">Professional development</span>{professionalDevelopment}</p>
       </div>
     </section>
   );

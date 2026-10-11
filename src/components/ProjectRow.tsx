@@ -8,7 +8,7 @@ export function ProjectRow({ project, index }: { project: Project; index: number
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-x-12">
         <div>
           <p className="meta flex gap-4 text-ash"><span className="shrink-0 text-white">P—{project.id}</span><span>{project.type}</span></p>
-          <h3 className="mt-4 text-[clamp(1.5rem,2.8vw,2.4rem)] font-semibold uppercase leading-tight tracking-[-0.035em]">
+          <h3 className={`mt-4 font-semibold uppercase leading-tight tracking-[-0.035em] ${project.slug === "red-team-research" ? "text-[clamp(1.25rem,2vw,1.7rem)]" : "text-[clamp(1.5rem,2.8vw,2.4rem)]"}`}>
             <a href={projectUrl(project.slug)} className="hover:underline underline-offset-4" data-cursor="view">{project.title}</a>
           </h3>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-fog">{project.summary}</p>
