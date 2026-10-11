@@ -22,14 +22,14 @@ export const journey: JourneyTrack[] = [
     entries: [
       { title: "Cloud, networking and security engineering", description: "Coursework and hands-on projects across AWS, Terraform, Windows identity and privacy tooling.", href: "#projects" },
       { title: "Cybersecurity & Compliance Engineering Bootcamp", org: "Óbuda University × CC Lab",
-        status: "Participant", description: "Additional cybersecurity development alongside university studies." },
+        period: "Jun 2026 – present", status: "Participant / ongoing", description: "Additional cybersecurity development alongside university studies." },
     ],
   },
   {
     code: "L", title: "Leadership", weight: "secondary",
     entries: [
-      { title: "ESN Secretary", org: "Erasmus Student Network", description: "Supporting international students through an ESN secretary role." },
-      { title: "Stipendium Hungaricum Mentor", description: "Peer mentoring within the international student community." },
+      { title: "ESN Secretary", org: "Erasmus Student Network", period: "Jan 2025 – Jan 2026", description: "Supporting international students through an ESN secretary role." },
+      { title: "Stipendium Hungaricum Mentor", period: "Jun 2025 – Jun 2026", description: "Peer mentoring within the international student community." },
     ],
   },
 ];

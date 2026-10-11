@@ -49,7 +49,7 @@ export const projects: Project[] = [
     ],
     spec: {
       problem: "A Terraform diff shows what changed, not what became reachable. A small change can open a new path to a sensitive resource.",
-      built: "A bounded analyzer for before/after HCL snapshots or saved plan JSON, with path evidence, coverage diagnostics and security verdicts.",
+      built: "A Terraform security-analysis tool that compares infrastructure changes and identifies newly introduced attack and reachability paths to sensitive AWS resources. It models supported cloud relationships as an infrastructure graph and produces explainable SAFE TO MERGE, REVIEW REQUIRED and BLOCK CHANGE decisions with supporting evidence, plus JSON, Markdown and SARIF reports for command-line, CI and pull-request security review workflows.",
       architecture: "React / TypeScript → FastAPI → SQLAlchemy with PostgreSQL (SQLite locally). Isolated background jobs run the Python analysis engine.",
       implementation: "Infrastructure graph construction, IAM normalization, attack-path search, findings, remediation guidance and JSON / Markdown / SARIF exports; CLI and GitHub PR checks.",
       decisions: "No Terraform execution, provider calls or AWS credentials. Analysis errors and incomplete coverage lead to REVIEW; strict CLI gating requires --fail-on-review.",
