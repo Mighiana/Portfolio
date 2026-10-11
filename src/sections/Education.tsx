@@ -1,4 +1,5 @@
 import { profile } from "@/data/profile";
+import { projectUrl } from "@/data/projects";
 
 export function Education() {
   const record = [
@@ -7,10 +8,10 @@ export function Education() {
     { k: "Programme", v: profile.degree },
     { k: "Status", v: profile.status },
     { k: "Expected graduation", v: profile.graduation },
-    { k: "Thesis", v: "Automation of Red Team Security in Controlled Environments", href: "#thesis" },
+    { k: "Thesis", v: "Automation of Red Team Security in Controlled Environments", href: projectUrl("red-team-research") },
   ];
   return (
-    <section id="education" data-nav="experience" data-theme="light" aria-labelledby="education-title" className="bg-paper pb-24 text-black md:pb-36">
+    <section id="education" data-nav="experience" data-theme="light" aria-labelledby="education-title" className="bg-paper py-12 text-black md:py-16">
       <div className="shell">
         <div className="reveal relative overflow-hidden bg-ink text-white">
           <span aria-hidden className="pointer-events-none absolute -bottom-[0.2em] -right-[0.04em] select-none text-[clamp(8rem,26vw,22rem)] font-semibold leading-none tracking-[-0.06em] text-white/[0.04]">
@@ -18,7 +19,7 @@ export function Education() {
           </span>
           <div className="relative grid grid-cols-1 gap-12 p-6 md:p-12 lg:grid-cols-12 lg:p-16">
             <div className="lg:col-span-6">
-              <p className="meta text-ash"><span className="text-white">Academic record</span> / 01</p>
+              <p className="meta text-ash"><span className="text-white">07 / Academic record</span></p>
               <h2 id="education-title" className="display mt-10 text-[clamp(2.5rem,6.5vw,5.75rem)] leading-[0.9]">
                 Óbuda<br />University
               </h2>

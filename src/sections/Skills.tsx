@@ -9,18 +9,18 @@ export function Skills() {
   return (
     <section id="skills" data-nav="skills" data-theme="dark" aria-labelledby="skills-title" className="bg-ink py-24 text-white md:py-28">
       <div className="shell">
-        <SectionHeader index="05" label="System inventory" aside={`${total} components / ${skillGroups.length} modules`} />
+        <SectionHeader index="09" label="System inventory" aside={`${total} components / ${skillGroups.length} modules`} />
         <div className="mt-14 flex flex-col gap-6 md:mt-14 md:flex-row md:items-end md:justify-between">
           <h2 id="skills-title" className="display reveal-lines text-[clamp(2.5rem,7vw,6.5rem)]">
             <span className="line"><span>System</span></span>
             <span className="line" style={{ ["--i" as string]: 1 }}><span>inventory</span></span>
           </h2>
-          <p className="reveal meta flex items-center gap-3 text-ash">
-            <span className="border border-graphite px-1.5 py-0.5 text-fog">Basic</span> = foundational working knowledge
+          <p className="reveal max-w-xs text-base leading-relaxed text-fog">
+            Tools and concepts used in projects, labs and coursework. Planned thesis tooling is not counted here.
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 border-l border-t border-graphite sm:grid-cols-2 md:mt-16 lg:grid-cols-5">
+        <div className="mt-12 grid grid-cols-1 border-l border-t border-graphite sm:grid-cols-2 lg:grid-cols-3">
           {skillGroups.map((g, gi) => {
             const Icon = icons[g.icon];
             return (

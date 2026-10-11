@@ -1,80 +1,20 @@
 export type SkillItem = { name: string; level?: "basic" };
-
 export type SkillGroup = {
-  code: string;
-  title: string;
-  subtitle: string;
-  icon: "automation" | "cloud" | "network" | "systems" | "tools";
-  items: SkillItem[];
+  code: string; title: string; subtitle: string;
+  icon: "automation" | "cloud" | "network" | "systems" | "tools"; items: SkillItem[];
 };
 
-/** Verified baseline only. Add a tool here once it is part of real work. */
 export const skillGroups: SkillGroup[] = [
-  {
-    code: "AUT",
-    title: "Automation",
-    subtitle: "Programming",
-    icon: "automation",
-    items: [
-      { name: "Python" },
-      { name: "C#" },
-      { name: "Bash" },
-      { name: "JavaScript", level: "basic" },
-      { name: "HTML / CSS" },
-      { name: "SQL" },
-      { name: "REST APIs" },
-    ],
-  },
-  {
-    code: "CLD",
-    title: "Cloud",
-    subtitle: "Cloud / DevOps",
-    icon: "cloud",
-    items: [
-      { name: "AWS" },
-      { name: "IAM" },
-      { name: "S3" },
-      { name: "EC2" },
-      { name: "CloudWatch" },
-      { name: "CloudTrail" },
-      { name: "VPC concepts" },
-      { name: "Docker" },
-      { name: "Kubernetes", level: "basic" },
-    ],
-  },
-  {
-    code: "NET",
-    title: "Network",
-    subtitle: "Networking",
-    icon: "network",
-    items: [
-      { name: "Routing" },
-      { name: "Switching" },
-      { name: "VLAN" },
-      { name: "NAT" },
-      { name: "ACL" },
-      { name: "CCNA topics" },
-      { name: "Network security concepts" },
-    ],
-  },
-  {
-    code: "SYS",
-    title: "Systems",
-    subtitle: "Operating systems",
-    icon: "systems",
-    items: [{ name: "Linux / Ubuntu" }, { name: "Windows Server" }, { name: "Active Directory" }],
-  },
-  {
-    code: "TLS",
-    title: "Tools",
-    subtitle: "Collaboration",
-    icon: "tools",
-    items: [
-      { name: "Git" },
-      { name: "GitHub" },
-      { name: "Jira" },
-      { name: "Confluence" },
-      { name: "Microsoft 365" },
-    ],
-  },
+  { code: "SEC", title: "Security", subtitle: "Identity / controls", icon: "tools",
+    items: ["IAM", "RBAC", "PKI / TLS", "Active Directory", "Security hardening", "Audit logging"].map((name) => ({ name })) },
+  { code: "CLD", title: "Cloud", subtitle: "AWS / infrastructure", icon: "cloud",
+    items: ["AWS", "S3", "EC2", "VPC", "CloudWatch", "CloudTrail", "Terraform"].map((name) => ({ name })) },
+  { code: "NET", title: "Network", subtitle: "Projects / coursework", icon: "network",
+    items: ["Routing", "Switching", "VLAN", "NAT / ACL", "Security groups", "NACLs"].map((name) => ({ name })) },
+  { code: "SYS", title: "Systems", subtitle: "Lab environments", icon: "systems",
+    items: ["Linux", "Windows Server", "AD DS", "AD CS", "IIS"].map((name) => ({ name })) },
+  { code: "ENG", title: "Engineering", subtitle: "Languages / tooling", icon: "automation",
+    items: ["Python", "C#", "PowerShell", "Bash", "SQL", "JavaScript", "Git"].map((name) => ({ name })) },
+  { code: "PLT", title: "Platform", subtitle: "DevSecOps / validation", icon: "tools",
+    items: ["Docker", "GitHub Actions", "TFLint", "Checkov", "ShellCheck", "LocalStack"].map((name) => ({ name })) },
 ];
