@@ -3,11 +3,11 @@ import { projectUrl } from "@/data/projects";
 
 export function Education() {
   const record = [
-    { k: "Institution", v: profile.university },
-    { k: "Faculty", v: profile.faculty },
     { k: "Programme", v: profile.degree },
+    { k: "Specialization", v: profile.specialization },
     { k: "Status", v: profile.status },
     { k: "Expected graduation", v: profile.graduation },
+    { k: "Scholarship", v: profile.scholarship },
     { k: "Thesis", v: "Automation of Red Team Security in Controlled Environments", href: projectUrl("red-team-research") },
   ];
   return (
@@ -15,7 +15,7 @@ export function Education() {
       <div className="shell">
         <div className="reveal relative overflow-hidden bg-ink text-white">
           <span aria-hidden className="pointer-events-none absolute -bottom-[0.2em] -right-[0.04em] select-none text-[clamp(8rem,26vw,22rem)] font-semibold leading-none tracking-[-0.06em] text-white/[0.04]">
-            {profile.graduation}
+            {profile.graduation.split(" ").pop()}
           </span>
           <div className="relative grid grid-cols-1 gap-12 p-6 md:p-12 lg:grid-cols-12 lg:p-16">
             <div className="lg:col-span-6">
@@ -24,7 +24,6 @@ export function Education() {
                 Óbuda<br />University
               </h2>
               <p className="mt-6 text-lg text-fog">{profile.faculty}</p>
-              <p className="meta mt-8 inline-flex border border-graphite px-3 py-2 text-white">Expected graduation — {profile.graduation}</p>
             </div>
             <dl className="self-end border-t border-graphite lg:col-span-5 lg:col-start-8">
               {record.map((r) => (

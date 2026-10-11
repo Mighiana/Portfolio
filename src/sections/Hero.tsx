@@ -9,8 +9,8 @@ const d = (ms: number) => ({ ["--d" as string]: `${ms}ms` });
 export function Hero() {
   const meta = [
     { k: "Location", v: profile.locationShort },
-    { k: "Status", v: profile.status },
     { k: "Graduation", v: profile.graduation },
+    { k: "Available from", v: profile.availability },
   ];
   return (
     <section id="home" data-nav="home" data-theme="dark" aria-labelledby="hero-title" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink pt-16 text-white">
@@ -21,12 +21,7 @@ export function Hero() {
 
       <div className="shell flex flex-1 flex-col">
         <div className="intro meta flex items-center justify-between gap-4 border-b border-graphite py-4 text-ash" style={d(0)}>
-          <span>{profile.monogram} / 001</span>
-          <span className="hidden md:inline">Portfolio — Index</span>
-          <span className="flex items-center gap-2 text-fog">
-            <span aria-hidden className="pulse size-1.5 rounded-full bg-white" />
-            System online
-          </span>
+          <span>{profile.status} · {profile.university}</span>
         </div>
 
         <div className="flex flex-1 flex-col justify-center py-12 md:py-16">

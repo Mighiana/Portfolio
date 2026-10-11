@@ -4,8 +4,8 @@ export type NavItem = { id: string; label: string; index: string };
 export const navItems: NavItem[] = [
   { id: "home", label: "Home", index: "01" },
   { id: "about", label: "About", index: "02" },
-  { id: "projects", label: "Projects", index: "04" },
-  { id: "experience", label: "Journey", index: "05" },
-  { id: "skills", label: "Skills", index: "09" },
-  { id: "contact", label: "Contact", index: "10" },
+  { id: "projects", label: "Projects", index: "03" },
+  { id: "experience", label: "Journey", index: "04" },
+  { id: "skills", label: "Skills", index: "05" },
+  { id: "contact", label: "Contact", index: "06" },
 ];

@@ -17,7 +17,10 @@ export const profile = {
   university: "Óbuda University",
   faculty: "John von Neumann Faculty of Informatics",
   status: "Final semester",
-  graduation: "2027",
+  graduation: "February 2027",
+  availability: "March 2027",
+  specialization: "Cloud Service Technologies & IT Security",
+  scholarship: "Stipendium Hungaricum Scholarship",
 
   location: "Budapest, Hungary",
   locationShort: "BUDAPEST / HU",
