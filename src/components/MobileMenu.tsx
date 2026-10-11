@@ -59,7 +59,7 @@ export function MobileMenu({ open, active, homeHref, onClose }: Props) {
         >
           <div className="shell flex flex-1 flex-col justify-between gap-10 py-8">
             <div>
-              <p className="meta mb-6 border-b border-graphite pb-4 text-ash">Index</p>
+              <p className="meta mb-6 border-b border-graphite pb-4 text-ash">Sections</p>
               <ul>
                 {navItems.map((item, i) => (
                   <motion.li
