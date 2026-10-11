@@ -37,7 +37,7 @@ export function Skills() {
                   {g.items.map((s, i) => (
                     <li key={s.name} className="flex min-h-11 items-center justify-between gap-3 border-b border-graphite/60 px-5 py-2.5 last:border-b-0">
                       <span className="flex items-baseline gap-3">
-                        <span className="meta w-5 text-ash/70 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                        <span className="meta w-5 text-ash tabular-nums">{String(i + 1).padStart(2, "0")}</span>
                         <span className="text-[15px] text-fog">{s.name}</span>
                       </span>
                       <span className={`meta shrink-0 border px-1.5 py-0.5 text-[10px] ${s.evidence === "project" ? "border-graphite text-fog" : "border-dashed border-ash text-ash"}`}>{evidenceLabels[s.evidence]}</span>
