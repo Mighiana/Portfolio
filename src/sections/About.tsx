@@ -3,14 +3,6 @@ import { LayerStack } from "@/components/visuals/LayerStack";
 import { profile } from "@/data/profile";
 
 export function About() {
-  const facts = [
-    { k: "Location", v: profile.location },
-    { k: "Education", v: profile.degree },
-    { k: "University", v: profile.university },
-    { k: "Status", v: profile.status },
-    { k: "Focus", v: profile.positioning },
-    { k: "Graduation", v: profile.graduation },
-  ];
   return (
     <section id="about" data-nav="about" data-theme="light" aria-labelledby="about-title" className="relative bg-paper py-24 text-black md:py-28">
       <div className="shell">
@@ -34,15 +26,6 @@ export function About() {
             <LayerStack className="mx-auto h-auto w-full max-w-[460px]" />
           </div>
         </div>
-
-        <dl className="mt-16 grid grid-cols-2 border-l border-t border-line-light md:mt-16 lg:grid-cols-6">
-          {facts.map((f, i) => (
-            <div key={f.k} className="reveal border-b border-r border-line-light p-4 md:p-6" style={{ ["--d" as string]: `${i * 60}ms` }}>
-              <dt className="meta text-muted-light">{f.k}</dt>
-              <dd className="mt-3 text-[15px] font-medium leading-snug md:text-base">{f.v}</dd>
-            </div>
-          ))}
-        </dl>
       </div>
     </section>
   );

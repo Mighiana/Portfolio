@@ -1,8 +1,8 @@
-export function ProofChain({ steps, note }: { steps: string[]; note?: string }) {
+export function ProofChain({ steps, note, label = "Technical evidence chain" }: { steps: string[]; note?: string; label?: string | null }) {
   return (
     <div>
-      <p className="meta mb-3 text-ash">Technical evidence chain</p>
-      <ol className="flex flex-col gap-2 border-l border-graphite pl-4 sm:flex-row sm:flex-wrap sm:items-center sm:border-l-0 sm:pl-0">
+      {label ? <p className="meta mb-3 text-ash">{label}</p> : null}
+      <ol aria-label={label ?? "How it works"} className="flex flex-col gap-2 border-l border-graphite pl-4 sm:flex-row sm:flex-wrap sm:items-center sm:border-l-0 sm:pl-0">
         {steps.map((step, i) => (
           <li key={step} className="flex items-center gap-2">
             {i > 0 ? <span aria-hidden className="text-ash">→</span> : null}

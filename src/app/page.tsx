@@ -1,6 +1,5 @@
 import { CustomCursor } from "@/components/CustomCursor";
 import { Navbar } from "@/components/Navbar";
-import { Preloader } from "@/components/Preloader";
 import { RevealObserver } from "@/components/RevealObserver";
 import { About } from "@/sections/About";
 import { Contact } from "@/sections/Contact";
@@ -16,7 +15,6 @@ export default function Home() {
   return (
     <>
       <a href="#main" className="skip-link meta">Skip to content</a>
-      <Preloader />
       <Navbar />
       <main id="main">
         <Hero />
