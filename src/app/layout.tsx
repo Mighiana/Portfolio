@@ -29,8 +29,8 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-/** Runs before paint: enables JS-only reveal styles. */
-const bootScript = `document.documentElement.classList.add('js');`;
+/** Runs before paint: enables JS-only reveal styles and restores the saved day/night theme. */
+const bootScript = `(function(){var d=document.documentElement;d.classList.add('js');try{if(localStorage.getItem('mu:mode')==='light'){d.dataset.mode='light';var t=function(){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content','#faf9f6');};t();document.addEventListener('DOMContentLoaded',t);}}catch(e){}})();`;
 
 const personLd = {
   "@context": "https://schema.org",

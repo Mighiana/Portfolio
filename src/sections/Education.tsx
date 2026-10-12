@@ -13,7 +13,7 @@ export function Education() {
   return (
     <section id="education" data-nav="experience" data-theme="light" aria-labelledby="education-title" className="bg-paper py-12 text-black md:py-16">
       <div className="shell">
-        <div className="reveal relative overflow-hidden bg-ink text-white">
+        <div data-theme="dark" className="reveal relative overflow-hidden bg-ink text-white">
           <span aria-hidden className="pointer-events-none absolute -bottom-[0.2em] -right-[0.04em] select-none text-[clamp(8rem,26vw,22rem)] font-semibold leading-none tracking-[-0.06em] text-white/[0.04]">
             {profile.graduation.split(" ").pop()}
           </span>
