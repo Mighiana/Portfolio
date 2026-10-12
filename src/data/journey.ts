@@ -1,5 +1,3 @@
-import { projectUrl } from "./projects";
-
 export type JourneyEntry = {
   title: string; org?: string; period?: string; status?: string; description?: string; href?: string;
 };
@@ -9,27 +7,19 @@ export type JourneyTrack = {
 
 export const journey: JourneyTrack[] = [
   {
-    code: "A", title: "Academic", weight: "primary",
+    code: "L", title: "Experience & leadership", weight: "primary",
     entries: [
-      { title: "BSc Computer Science and Engineering", org: "Óbuda University",
-        period: "Expected 2027", status: "Final semester", href: "#education" },
-      { title: "BSc cybersecurity thesis", period: "2026–2027", status: "Research / experimental design",
-        href: projectUrl("red-team-research") },
+      { title: "Volunteer Secretary", org: "Erasmus Student Network (ESN) Óbuda", period: "2025 – 2026",
+        description: "Coordinate communications, meeting documentation and operational follow-up; support international-student onboarding, university communication and recurring event and administrative coordination." },
+      { title: "Mentor", org: "Stipendium Hungaricum Mentor Network", period: "2025 – 2026",
+        description: "Mentor assigned international students through academic systems, university procedures, documentation and deadlines; create reusable guidance for recurring onboarding and administrative questions." },
     ],
   },
   {
-    code: "T", title: "Technical development", weight: "primary",
+    code: "T", title: "Technical development", weight: "secondary",
     entries: [
-      { title: "Cloud, networking and security engineering", description: "Coursework and hands-on projects across AWS, Terraform, Windows identity and privacy tooling.", href: "#projects" },
       { title: "Cybersecurity & Compliance Engineering Bootcamp", org: "Óbuda University × CC Lab",
-        period: "Jun 2026 – present", status: "Participant / ongoing", description: "Additional cybersecurity development alongside university studies." },
-    ],
-  },
-  {
-    code: "L", title: "Leadership", weight: "secondary",
-    entries: [
-      { title: "ESN Secretary", org: "Erasmus Student Network", period: "Jan 2025 – Jan 2026", description: "Supporting international students through an ESN secretary role." },
-      { title: "Stipendium Hungaricum Mentor", period: "Jun 2025 – Jun 2026", description: "Peer mentoring within the international student community." },
+        period: "2026", status: "Participant", description: "Additional cybersecurity development alongside university studies." },
     ],
   },
 ];

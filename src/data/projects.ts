@@ -93,7 +93,7 @@ export const projects: Project[] = [
   },
   {
     id: "03", slug: "securevpc", title: "SecureVPC",
-    type: "Network security / AWS / Terraform", year: "2025 → 2026", status: "Original lab + Terraform reconstruction",
+    type: "Network security / AWS / Terraform", year: "2025 → 2026", status: "Terraform reconstruction · Validated offline, not deployed",
     summary: "Segments a public bastion from a private workload with no public IP, SG-to-SG access, custom NACLs, NAT-only egress and VPC Flow Logs.",
     proof: ["Internet", "Bastion", "Private workload", "NAT-only egress"],
     proofNote: "Administration via bastion; private workload outbound via NAT.",
@@ -117,7 +117,7 @@ export const projects: Project[] = [
   },
   {
     id: "04", slug: "windows-pki", title: "Windows Enterprise PKI & Certificate Trust Lab",
-    type: "Windows security / Identity / PKI", year: "May 2026 → 2026 extension", status: "Original lab completed · Live rebuild documented",
+    type: "Windows security / Identity / PKI", year: "2026", status: "Lab completed · Tooling added",
     summary: "AD-integrated Windows Server 2022 PKI with an Enterprise Root CA, GPO trust distribution, machine certificates and trusted IIS HTTPS.",
     proof: ["Enterprise Root CA", "GPO trust", "Machine certificate", "IIS :443", "Trusted browser"],
     stack: ["Windows Server 2022", "AD DS / AD CS", "IIS", "PowerShell", "Pester", "PSScriptAnalyzer"],

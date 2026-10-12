@@ -59,7 +59,7 @@ export function MobileMenu({ open, active, homeHref, onClose }: Props) {
         >
           <div className="shell flex flex-1 flex-col justify-between gap-10 py-8">
             <div>
-              <p className="meta mb-6 border-b border-graphite pb-4 text-ash">Index</p>
+              <p className="meta mb-6 border-b border-graphite pb-4 text-ash">Sections</p>
               <ul>
                 {navItems.map((item, i) => (
                   <motion.li
@@ -75,7 +75,6 @@ export function MobileMenu({ open, active, homeHref, onClose }: Props) {
                       aria-current={active === item.id ? "location" : undefined}
                       className="group flex min-h-16 items-baseline gap-5 py-3"
                     >
-                      <span className="meta w-6 text-ash tabular-nums">{item.index}</span>
                       <span
                         className={cn(
                           "text-[clamp(2.25rem,11vw,3.5rem)] font-semibold uppercase leading-none tracking-[-0.04em] transition-colors",

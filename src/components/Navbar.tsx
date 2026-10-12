@@ -62,7 +62,6 @@ export function Navbar() {
                       isActive ? "" : light ? "text-muted-light hover:text-black" : "text-ash hover:text-white",
                     )}
                   >
-                    <span className={cn("tabular-nums", isActive ? "opacity-100" : "opacity-60")}>{item.index}</span>
                     <span>{item.label}</span>
                     <span
                       aria-hidden
