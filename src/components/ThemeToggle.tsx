@@ -7,12 +7,18 @@ import { cn } from "@/lib/cn";
 const NIGHT = "#090909";
 const DAY = "#faf9f6";
 
+function syncThemeColor(day: boolean) {
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", day ? DAY : NIGHT);
+}
+
 /** Day/night switch. The saved choice is applied before paint by the boot script in layout.tsx. */
 export function ThemeToggle({ className }: { className?: string }) {
   const [day, setDay] = useState(false);
 
   useEffect(() => {
-    setDay(document.documentElement.dataset.mode === "light");
+    const isDay = document.documentElement.dataset.mode === "light";
+    if (isDay) syncThemeColor(true);
+    setDay(isDay);
   }, []);
 
   const toggle = () => {
@@ -23,7 +29,7 @@ export function ThemeToggle({ className }: { className?: string }) {
     try {
       localStorage.setItem("mu:mode", next ? "light" : "dark");
     } catch {}
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", next ? DAY : NIGHT);
+    syncThemeColor(next);
     setDay(next);
   };
 

@@ -109,6 +109,10 @@ html[data-mode="light"] [data-theme="dark"] {
   --color-graphite: var(--color-line-light);
   --color-line-dark: var(--color-line-light);
 }
+/* Dark cards inside light sections keep an edge once they turn white. */
+html[data-mode="light"] [data-theme="light"] [data-theme="dark"] {
+  box-shadow: inset 0 0 0 1px var(--color-line-light);
+}
 html[data-mode="light"] [data-theme="dark"] ::selection {
   background: #000;
   color: var(--day-bg);
