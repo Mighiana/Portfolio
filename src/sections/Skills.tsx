@@ -18,6 +18,7 @@ export function Skills() {
           <p className="reveal max-w-xs text-base leading-relaxed text-fog">
             Grouped by evidence: used in linked projects, or studied in coursework / labs. Planned thesis tooling is not counted.
           </p>
+          <p aria-hidden className="meta text-ash sm:hidden">Solid border — projects · Dashed — coursework / labs</p>
         </div>
 
         <div className="mt-12 grid grid-cols-1 border-l border-t border-graphite sm:grid-cols-2 lg:grid-cols-3">
@@ -30,17 +31,18 @@ export function Skills() {
                     <Icon aria-hidden strokeWidth={1.25} className="size-5 text-white" />
                     <span className="meta tabular-nums">{g.code}.{String(gi + 1).padStart(2, "0")}</span>
                   </div>
-                  <h3 className="mt-8 text-2xl font-semibold uppercase tracking-[-0.03em]">{g.title}</h3>
+                  <h3 className="mt-4 text-2xl font-semibold uppercase tracking-[-0.03em] sm:mt-8">{g.title}</h3>
                   <p className="meta mt-1 text-ash">{g.subtitle} — {String(g.items.length).padStart(2, "0")}</p>
                 </div>
-                <ul className="flex-1">
+                <ul className="flex flex-1 flex-wrap gap-2 p-5 sm:block sm:p-0">
                   {g.items.map((s, i) => (
-                    <li key={s.name} className="flex min-h-11 items-center justify-between gap-3 border-b border-graphite/60 px-5 py-2.5 last:border-b-0">
+                    <li key={s.name} className={`flex items-center justify-between gap-3 border px-2.5 py-1.5 sm:min-h-11 sm:border-0 sm:border-b sm:border-graphite/60 sm:px-5 sm:py-2.5 sm:last:border-b-0 ${s.evidence === "project" ? "border-graphite" : "border-dashed border-ash"}`}>
                       <span className="flex items-baseline gap-3">
-                        <span className="meta w-5 text-ash tabular-nums">{String(i + 1).padStart(2, "0")}</span>
-                        <span className="text-[15px] text-fog">{s.name}</span>
+                        <span className="meta hidden w-5 text-ash tabular-nums sm:inline">{String(i + 1).padStart(2, "0")}</span>
+                        <span className="text-sm text-fog sm:text-[15px]">{s.name}</span>
                       </span>
-                      <span className={`meta shrink-0 border px-1.5 py-0.5 text-[10px] ${s.evidence === "project" ? "border-graphite text-fog" : "border-dashed border-ash text-ash"}`}>{evidenceLabels[s.evidence]}</span>
+                      <span className="sr-only sm:hidden">({evidenceLabels[s.evidence]})</span>
+                      <span className={`meta hidden shrink-0 border px-1.5 py-0.5 text-[10px] sm:inline ${s.evidence === "project" ? "border-graphite text-fog" : "border-dashed border-ash text-ash"}`}>{evidenceLabels[s.evidence]}</span>
                     </li>
                   ))}
                 </ul>

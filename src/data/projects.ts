@@ -10,6 +10,8 @@ export type ProjectSpec = {
 };
 export type Project = {
   id: string; slug: string; title: string; type: string; year: string;
+  /** Short title + descriptor for the hero's featured-work index. */
+  shortTitle?: string; hook?: string;
   status: string; summary: string; proof: string[]; proofNote?: string;
   stack: string[]; stackLabel?: string; visual: ProjectVisual;
   visualLabels?: string[]; visualBoundary?: string; visualCaption?: string;
@@ -29,6 +31,7 @@ const media = (name: string) => {
 export const projects: Project[] = [
   {
     id: "01", slug: "blastradius", title: "BlastRadius",
+    hook: "Terraform attack-path analysis",
     type: "Cloud security / Security automation", year: "2026", status: "Private beta · Render",
     summary: "Compares Terraform snapshots and explains newly reachable paths to sensitive cloud resources using supported AWS relationships.",
     proof: ["Terraform change", "Infrastructure graph", "New reachability path", "Security impact"],
@@ -59,6 +62,7 @@ export const projects: Project[] = [
   },
   {
     id: "02", slug: "secure-cloud-files", title: "Secure Cloud File Management Platform",
+    shortTitle: "Secure Cloud Files", hook: "Quarantine-first AWS file platform",
     type: "Cloud security / Application security / AWS", year: "2025 → 2026", status: "Working / locally verified",
     summary: "Quarantines uploads until integrity, file-signature and optional ClamAV checks pass, with per-user access, least-privilege S3 storage and tamper-evident auditing.",
     proof: ["Untrusted upload", "Quarantine", "Validation", "Approved / rejected", "Controlled download"],
@@ -93,6 +97,7 @@ export const projects: Project[] = [
   },
   {
     id: "03", slug: "securevpc", title: "SecureVPC",
+    hook: "Segmented AWS VPC in Terraform",
     type: "Network security / AWS / Terraform", year: "2025 → 2026", status: "Terraform reconstruction · Validated offline, not deployed",
     summary: "Segments a public bastion from a private workload with no public IP, SG-to-SG access, custom NACLs, NAT-only egress and VPC Flow Logs.",
     proof: ["Internet", "Bastion", "Private workload", "NAT-only egress"],
@@ -117,6 +122,7 @@ export const projects: Project[] = [
   },
   {
     id: "04", slug: "windows-pki", title: "Windows Enterprise PKI & Certificate Trust Lab",
+    shortTitle: "Windows Enterprise PKI", hook: "AD CS · GPO trust · IIS HTTPS",
     type: "Windows security / Identity / PKI", year: "2026", status: "Lab completed · Tooling added",
     summary: "AD-integrated Windows Server 2022 PKI with an Enterprise Root CA, GPO trust distribution, machine certificates and trusted IIS HTTPS.",
     proof: ["Enterprise Root CA", "GPO trust", "Machine certificate", "IIS :443", "Trusted browser"],
@@ -139,7 +145,6 @@ export const projects: Project[] = [
     type: "Security research / Adversary emulation", year: "2026–2027", status: "In progress · Research / experimental design",
     summary: "Research into whether automated adversary-emulation results correspond with independent endpoint evidence and defensive detection.",
     proof: ["Framework result", "Windows endpoint", "Sysmon evidence", "Wazuh ingestion", "Defensive detection"],
-    proofNote: "Conceptual experimental architecture · Planned — not deployed.",
     stack: ["MITRE ATT&CK", "CALDERA", "Windows", "Sysmon", "Wazuh"], stackLabel: "Planned / evaluated — not implemented",
     visual: "pipeline", visualLabels: ["FRAMEWORK", "ENDPOINT", "SYSMON", "WAZUH", "DETECTION"],
     visualBoundary: "CONTROLLED LAB (PLANNED)", visualCaption: "Conceptual / planned", visualSequence: true,

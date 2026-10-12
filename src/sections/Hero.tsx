@@ -3,6 +3,7 @@ import { ActionLink } from "@/components/ActionLink";
 import { CVButton } from "@/components/CVButton";
 import { LazyTopologyField } from "@/components/visuals/LazyVisuals";
 import { profile } from "@/data/profile";
+import { projects, projectUrl } from "@/data/projects";
 
 const d = (ms: number) => ({ ["--d" as string]: `${ms}ms` });
 
@@ -12,6 +13,7 @@ export function Hero() {
     { k: "Graduation", v: profile.graduation },
     { k: "Available from", v: profile.availability },
   ];
+  const highlights = projects.filter((p) => p.tier === "featured" && p.hook);
   return (
     <section id="home" data-nav="home" data-theme="dark" aria-labelledby="hero-title" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink pt-16 text-white">
       <div aria-hidden className="intro absolute inset-0 -z-10" style={d(400)}>
@@ -36,6 +38,7 @@ export function Hero() {
             <div className="intro lg:col-span-6" style={d(500)}>
               <p className="meta text-[13px] tracking-[0.22em] text-white">{profile.positioning}</p>
               <p className="mt-4 max-w-md text-lg leading-snug text-fog md:text-xl">{profile.statement}</p>
+              <p className="mt-3 max-w-md text-[15px] leading-snug text-ash">{profile.seeking}</p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <ActionLink href="#projects" variant="primary" cursor="view" icon={<ArrowDown aria-hidden className="size-3.5" />}>
                   View projects
@@ -56,14 +59,32 @@ export function Hero() {
               </div>
             </div>
 
-            <dl className="intro grid grid-cols-3 self-end border-t border-graphite lg:col-span-5 lg:col-start-8" style={d(650)}>
-              {meta.map((m) => (
-                <div key={m.k} className="border-r border-graphite py-4 pr-3 last:border-r-0 [&:not(:first-child)]:pl-3">
-                  <dt className="meta text-ash">{m.k}</dt>
-                  <dd className="meta mt-2 text-white">{m.v}</dd>
-                </div>
-              ))}
-            </dl>
+            <div className="intro flex flex-col gap-8 self-end lg:col-span-5 lg:col-start-8" style={d(650)}>
+              <nav aria-label="Featured projects">
+                <p className="meta mb-2 text-ash">Featured work</p>
+                <ul className="border-t border-graphite">
+                  {highlights.map((p) => (
+                    <li key={p.slug} className="border-b border-graphite">
+                      <a href={projectUrl(p.slug)} data-cursor="view" className="group flex min-h-11 items-center justify-between gap-4 py-2.5">
+                        <span className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-3">
+                          <span className="text-[15px] font-medium text-white group-hover:underline underline-offset-4">{p.shortTitle ?? p.title}</span>
+                          <span className="text-sm text-ash">{p.hook}</span>
+                        </span>
+                        <ArrowUpRight aria-hidden className="size-3.5 shrink-0 text-ash group-hover:text-white" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+              <dl className="grid grid-cols-3 border-t border-graphite">
+                {meta.map((m) => (
+                  <div key={m.k} className="border-r border-graphite py-4 pr-3 last:border-r-0 [&:not(:first-child)]:pl-3">
+                    <dt className="meta text-ash">{m.k}</dt>
+                    <dd className="meta mt-2 text-white">{m.v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </div>
         </div>
 

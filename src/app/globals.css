@@ -132,19 +132,16 @@ html.js .reveal-rule[data-in] {
   transform: none;
 }
 
-/* Hero intro: plays on load, delayed while the preloader runs */
+/* Hero intro: plays on load */
 html.js .intro {
   opacity: 0;
-  animation: intro-fade 1.1s var(--ease-cine) forwards;
-  animation-delay: calc(var(--d, 0ms) + var(--boot, 0ms));
+  animation: intro-fade 0.7s var(--ease-cine) forwards;
+  animation-delay: calc(var(--d, 0ms) * 0.6);
 }
 html.js .intro-line > span {
   transform: translate3d(0, 105%, 0);
-  animation: intro-rise 1.3s var(--ease-cine) forwards;
-  animation-delay: calc(var(--d, 0ms) + var(--boot, 0ms));
-}
-html[data-boot="run"] {
-  --boot: 1050ms;
+  animation: intro-rise 0.8s var(--ease-cine) forwards;
+  animation-delay: calc(var(--d, 0ms) * 0.6);
 }
 @keyframes intro-fade {
   from { opacity: 0; transform: translate3d(0, 14px, 0); }
@@ -152,26 +149,6 @@ html[data-boot="run"] {
 }
 @keyframes intro-rise {
   to { transform: none; }
-}
-
-/* ---------- Preloader ---------- */
-.preloader {
-  display: none;
-}
-html[data-boot="run"] .preloader {
-  display: flex;
-  animation: preloader-out 0.45s ease 0.85s forwards;
-}
-.preloader-bar {
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: preloader-bar 0.7s var(--ease-cine) 0.1s forwards;
-}
-@keyframes preloader-bar {
-  to { transform: scaleX(1); }
-}
-@keyframes preloader-out {
-  to { opacity: 0; visibility: hidden; }
 }
 
 /* ---------- Custom cursor ---------- */

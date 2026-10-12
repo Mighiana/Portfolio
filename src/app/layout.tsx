@@ -29,8 +29,8 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-/** Runs before paint: enables JS-only reveal styles and decides whether the preloader plays. */
-const bootScript = `(function(){var d=document.documentElement;d.classList.add('js');try{var r=window.matchMedia('(prefers-reduced-motion: reduce)').matches;var s=sessionStorage.getItem('mu:booted');d.dataset.boot=(r||s)?'skip':'run';sessionStorage.setItem('mu:booted','1');}catch(e){d.dataset.boot='skip';}})();`;
+/** Runs before paint: enables JS-only reveal styles. */
+const bootScript = `document.documentElement.classList.add('js');`;
 
 const personLd = {
   "@context": "https://schema.org",
@@ -50,9 +50,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
-        <noscript>
-          <style>{`.preloader{display:none!important}`}</style>
-        </noscript>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }} />
       </head>
       <body>{children}</body>

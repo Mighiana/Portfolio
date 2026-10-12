@@ -12,6 +12,7 @@ export const profile = {
   discipline: "Computer Science & Engineering",
   statement:
     "Building secure systems, cloud infrastructure and security automation.",
+  seeking: "Open to cybersecurity, cloud and infrastructure security traineeships and graduate roles.",
 
   degree: "BSc Computer Science and Engineering",
   university: "Óbuda University",

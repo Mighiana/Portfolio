@@ -14,7 +14,7 @@ export function ProjectRow({ project, index }: { project: Project; index: number
           <p className="mt-4 max-w-xl text-base leading-relaxed text-fog">{project.summary}</p>
         </div>
         <div>
-          <ProofChain steps={project.proof} note={project.proofNote} />
+          <ProofChain steps={project.proof} note={project.proofNote} label={null} />
           <p className="meta mt-5 text-fog">{project.status}</p>
           {project.stackLabel ? <p className="meta mt-3 text-ash">{project.stackLabel}</p> : null}
           <ul className="mt-3 flex flex-wrap gap-2" aria-label={project.stackLabel ?? "Key technologies"}>
