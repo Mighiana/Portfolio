@@ -51,6 +51,7 @@ export function MobileMenu({ open, active, homeHref, onClose }: Props) {
           role="dialog"
           aria-modal="true"
           aria-label="Site menu"
+          data-theme="dark"
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

@@ -45,7 +45,7 @@ export default async function CaseStudy({ params }: Props) {
     <>
       <a href="#main" className="skip-link meta">Skip to content</a>
       <Navbar />
-      <main id="main">
+      <main id="main" data-theme="dark">
         <div className="shell bg-ink pb-4 pt-24 text-white">
           <a href={`${home}#projects`} className="meta inline-flex min-h-11 items-center text-fog hover:text-white">← Back to selected work</a>
         </div>

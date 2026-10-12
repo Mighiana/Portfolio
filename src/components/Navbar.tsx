@@ -7,6 +7,7 @@ import { profile } from "@/data/profile";
 import { useSectionState } from "@/hooks/useSectionState";
 import { cn } from "@/lib/cn";
 import { MobileMenu } from "./MobileMenu";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Navbar() {
   const homeHref = usePathname()?.includes("/projects/") ? `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/` : "";
@@ -26,6 +27,7 @@ export function Navbar() {
   return (
     <>
       <header
+        data-theme={light ? "light" : "dark"}
         className={cn(
           "fixed inset-x-0 top-0 z-[100] border-b transition-[background-color,border-color,color,backdrop-filter] duration-500",
           light ? "text-black" : "text-white",
@@ -78,6 +80,7 @@ export function Navbar() {
           </ul>
 
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <a
               href={profile.cvPath}
               target="_blank"

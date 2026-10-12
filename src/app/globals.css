@@ -89,6 +89,45 @@ body {
   top: 1rem;
 }
 
+/* ---------- Day theme: dark sections switch to warm white; light sections are unchanged ---------- */
+html[data-mode="light"] {
+  color-scheme: light;
+  --day-bg: #faf9f6;
+}
+html[data-mode="light"],
+html[data-mode="light"] body {
+  background: var(--day-bg);
+  color: #000;
+}
+html[data-mode="light"] [data-theme="dark"] {
+  --color-ink: var(--day-bg);
+  --color-void: #f5f3ee;
+  --color-white: #000;
+  --color-black: var(--day-bg);
+  --color-fog: #2b2a27;
+  --color-ash: var(--color-muted-light);
+  --color-graphite: var(--color-line-light);
+  --color-line-dark: var(--color-line-light);
+}
+html[data-mode="light"] [data-theme="dark"] ::selection {
+  background: #000;
+  color: var(--day-bg);
+}
+/* Inline SVG diagrams in dark sections follow the palette (same values in night mode). */
+[data-theme="dark"] svg [fill="#fff"] { fill: var(--color-white); }
+[data-theme="dark"] svg [stroke="#fff"] { stroke: var(--color-white); }
+[data-theme="dark"] svg [fill="#000"] { fill: var(--color-black); }
+[data-theme="dark"] svg [fill="#090909"] { fill: var(--color-ink); }
+[data-theme="dark"] svg [fill="#9a9a9a"] { fill: var(--color-ash); }
+[data-theme="dark"] svg [stroke="#9a9a9a"] { stroke: var(--color-ash); }
+[data-theme="dark"] svg [fill="#d8d8d8"] { fill: var(--color-fog); }
+/* Canvas fields draw white-on-transparent; invert them on the day background. */
+html[data-mode="light"] [data-theme="dark"] canvas { filter: invert(1); }
+
+.mode-icon-night { display: none; }
+html[data-mode="light"] .mode-icon-day { display: none; }
+html[data-mode="light"] .mode-icon-night { display: block; }
+
 /* ---------- Reveal system (progressive enhancement: content is visible without JS) ---------- */
 html.js .reveal {
   opacity: 0;
