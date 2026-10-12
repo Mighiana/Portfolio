@@ -13,7 +13,7 @@ export function Hero() {
     { k: "Graduation", v: profile.graduation },
     { k: "Available from", v: profile.availability },
   ];
-  const highlights = projects.filter((p) => p.tier === "featured" && p.hook);
+  const highlights = projects.filter((p) => p.published && p.tier === "featured" && p.hook);
   return (
     <section id="home" data-nav="home" data-theme="dark" aria-labelledby="hero-title" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink pt-16 text-white">
       <div aria-hidden className="intro absolute inset-0 -z-10" style={d(400)}>
